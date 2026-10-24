@@ -1,0 +1,134 @@
+{
+  "projects": [
+    {
+      "id": "p1",
+      "title": {
+        "pt": "Vlog: 24h em Recife",
+        "en": "Vlog: 24h in Recife"
+      },
+      "desc": {
+        "pt": "Vlog de viagem com cortes rápidos, mapa animado entre os locais e trilha sincronizada com os passos.",
+        "en": "Travel vlog with fast cuts, an animated map between spots and music synced to footsteps."
+      },
+      "cat": "youtube",
+      "dur": "14:32",
+      "url": "",
+      "thumb": "",
+      "word": "24H",
+      "art": "a-wave",
+      "facts": [
+        "16:9",
+        "4K",
+        "Premiere"
+      ]
+    },
+    {
+      "id": "p2",
+      "title": {
+        "pt": "Teaser de lançamento",
+        "en": "Launch teaser"
+      },
+      "desc": {
+        "pt": "Teaser de produto com tipografia cinética, color grading quente e sound design pontuando cada corte.",
+        "en": "Product teaser with kinetic type, warm color grading and sound design punctuating every cut."
+      },
+      "cat": "comercial",
+      "dur": "00:45",
+      "url": "",
+      "thumb": "",
+      "word": "NOVO",
+      "art": "a-split",
+      "facts": [
+        "16:9 + 9:16",
+        "After Effects",
+        "Premiere"
+      ]
+    },
+    {
+      "id": "p3",
+      "title": {
+        "pt": "Reels: receita em 30s",
+        "en": "Reels: a recipe in 30s"
+      },
+      "desc": {
+        "pt": "Receita inteira em 30 segundos com legenda palavra por palavra e jump cuts no ritmo da música.",
+        "en": "A whole recipe in 30 seconds with word-by-word captions and jump cuts on the beat."
+      },
+      "cat": "reels",
+      "dur": "00:30",
+      "url": "",
+      "thumb": "",
+      "word": "30s",
+      "art": "a-dots",
+      "facts": [
+        "9:16",
+        "Premiere"
+      ]
+    },
+    {
+      "id": "p4",
+      "title": {
+        "pt": "Vinheta de canal",
+        "en": "Channel intro"
+      },
+      "desc": {
+        "pt": "Animação de logo em 2D com line boil, no mesmo traço de cartoon da identidade do canal.",
+        "en": "2D logo animation with line boil, in the same cartoon style as the channel’s identity."
+      },
+      "cat": "motion",
+      "dur": "00:08",
+      "url": "",
+      "thumb": "",
+      "word": "INTRO",
+      "art": "a-burst",
+      "facts": [
+        "After Effects",
+        "2D",
+        "loop"
+      ]
+    },
+    {
+      "id": "p5",
+      "title": {
+        "pt": "Gameplay: melhores momentos",
+        "en": "Gameplay: best moments"
+      },
+      "desc": {
+        "pt": "Compilado com zoom punch-in, efeitos sonoros de meme e contador de kills animado.",
+        "en": "Compilation with punch-in zooms, meme sound effects and an animated kill counter."
+      },
+      "cat": "youtube",
+      "dur": "11:05",
+      "url": "",
+      "thumb": "",
+      "word": "GG!",
+      "art": "a-stripes",
+      "facts": [
+        "16:9",
+        "60 fps",
+        "Premiere"
+      ]
+    },
+    {
+      "id": "p6",
+      "title": {
+        "pt": "Bastidores de evento",
+        "en": "Event behind the scenes"
+      },
+      "desc": {
+        "pt": "Bastidores de um evento editados como mini documentário vertical, com entrevistas rápidas e b-roll.",
+        "en": "Event backstage edited as a vertical mini documentary, with quick interviews and b-roll."
+      },
+      "cat": "reels",
+      "dur": "00:58",
+      "url": "",
+      "thumb": "",
+      "word": "BTS",
+      "art": "a-grid",
+      "facts": [
+        "9:16",
+        "color"
+      ]
+    }
+  ]
+}

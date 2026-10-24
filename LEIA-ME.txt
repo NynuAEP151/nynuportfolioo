@@ -1,0 +1,10 @@
+SITE NYNU - arquivos para o GitHub Pages
+
+index.html      -> o site
+admin.html      -> painel para gerenciar os vídeos (seudominio.com/admin.html)
+projects.json   -> lista de vídeos (o painel edita este arquivo sozinho)
+assets/         -> logo, ícone da aba e estilos
+thumbs/         -> miniaturas enviadas pelo painel
+
+Envie TODOS os arquivos e pastas para a raiz do repositório.
+O passo a passo completo está na conversa com o Claude.

@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>NYNU | Editor de vídeo</title>
+<meta name="description" content="NYNU, editor de vídeo: YouTube, Reels, motion graphics, cor e som.">
+<meta property="og:title" content="NYNU | Editor de vídeo">
+<meta property="og:image" content="assets/logo.webp">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Rubik:wght@400;500;700;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="boil"><feTurbulence id="boilNoise" type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="1"/><feDisplacementMap in="SourceGraphic" scale="7"/></filter>
+</svg>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="#top"><b>NYNU</b></a>
+    <nav aria-label="Seções">
+      <a href="#trabalhos" data-en="Work">Trabalhos</a>
+      <a href="#servicos" data-en="Services">Serviços</a>
+      <a href="#processo" data-en="Process">Processo</a>
+      <a href="#contato" data-en="Contact">Contato</a>
+    </nav>
+    <button class="lang" id="lang" type="button" aria-label="Switch to English"><i class="knob" aria-hidden="true"></i><span>PT</span><span>EN</span></button>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <span class="eyebrow" data-en="▶ Video editor · Motion">▶ Editor de vídeo · Motion</span>
+        <h1>
+          <span class="ln"><span data-en="Videos that hook">Vídeos que prendem</span></span>
+          <span class="ln"><span class="stroke" data-en="from the first">do primeiro</span></span>
+          <span class="ln"><span data-en="to the &lt;span class=&quot;blue&quot;&gt;last frame.&lt;/span&gt;">ao <span class="blue">último frame.</span></span></span>
+        </h1>
+        <p class="lede" data-en="I edit videos for YouTube, Reels and brands that want to be watched to the very end. Editing, motion graphics, color and sound in one package.">Edito vídeos para YouTube, Reels e marcas que querem ser assistidos até o último frame. Montagem, motion graphics, cor e som num pacote só.</p>
+        <div class="ctas">
+          <a class="btn magnet" href="#trabalhos" data-en="See my work &lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;3&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M5 12h14M13 6l6 6-6 6&quot;/&gt;&lt;/svg&gt;">Ver trabalhos <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="btn alt magnet" href="#contato" data-en="Talk to me">Fale comigo</a>
+        </div>
+      </div>
+      <div class="stage" id="stage">
+        <svg class="burst" id="burst" viewBox="-100 -100 200 200" aria-hidden="true"></svg>
+        <div class="sticker"><img src="assets/logo.webp" alt="Logo NYNU: personagem preto de olho amarelo e moletom azul"></div>
+        <span class="tag t1">00:00:24:00</span>
+        <span class="tag t2">24 fps</span>
+        <span class="tag t3">CUT ✂</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="trabalhos">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <h2 data-en="Recent &lt;em&gt;work&lt;/em&gt;">Trabalhos <em>recentes</em></h2>
+        <div class="chips" role="group" aria-label="Filtrar trabalhos">
+          <button class="chip" type="button" data-f="all" aria-pressed="true" data-en="All">Todos</button>
+          <button class="chip" type="button" data-f="youtube" aria-pressed="false">YouTube</button>
+          <button class="chip" type="button" data-f="reels" aria-pressed="false">Reels</button>
+          <button class="chip" type="button" data-f="comercial" aria-pressed="false" data-en="Commercial">Comercial</button>
+          <button class="chip" type="button" data-f="motion" aria-pressed="false">Motion</button>
+        </div>
+      </div>
+      <div class="grid" id="grid"></div>
+    </div>
+  </section>
+
+  <section class="block" id="servicos">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <h2 data-en="What I &lt;em&gt;do&lt;/em&gt;">O que eu <em>faço</em></h2>
+        <p data-en="From raw footage to a file ready to upload. You send what you shot, I send back a video with rhythm.">Do material bruto ao arquivo pronto para subir. Você manda o que gravou, eu devolvo um vídeo com ritmo.</p>
+      </div>
+      <div class="svc">
+        <article class="reveal">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.1 15.9M14.5 14.5 20 20M8.1 8.1 12 12"/></svg></div>
+          <h3 data-en="YouTube editing">Edição para YouTube</h3>
+          <p data-en="Rhythmic cuts, zooms, perfectly timed memes and retention planned from the hook.">Cortes de ritmo, zooms, memes no tempo certo e retenção pensada desde o gancho.</p>
+          <ul><li>vlog</li><li>gameplay</li><li>podcast</li></ul>
+        </article>
+        <article class="reveal hl">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></div>
+          <h3>Reels &amp; TikTok</h3>
+          <p data-en="Vertical 9:16, word-by-word animated captions and a hook in the first 2 seconds.">Vertical 9:16, legenda animada palavra por palavra e gancho nos primeiros 2 segundos.</p>
+          <ul><li>9:16</li><li data-en="captions">legendas</li><li>trends</li></ul>
+        </article>
+        <article class="reveal">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 6.9H22l-6 4.6 2.3 7.1L12 16.3 5.7 20.6 8 13.5 2 8.9h7.6z"/></svg></div>
+          <h3>Motion graphics</h3>
+          <p data-en="Intros, lower thirds, transitions and logo animation in your brand’s style.">Vinhetas, lower thirds, transições e animação de logo no traço da sua marca.</p>
+          <ul><li>after effects</li><li>2D</li><li>kinetic type</li></ul>
+        </article>
+        <article class="reveal">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10v4M7 6v12M11 3v18M15 8v8M19 5v14"/></svg></div>
+          <h3 data-en="Color &amp;amp; audio">Cor &amp; áudio</h3>
+          <p data-en="Color grading with identity, voice cleanup, music and sound effects that make every cut land.">Color grading com identidade, limpeza de voz, trilha e efeitos sonoros que fazem o corte bater.</p>
+          <ul><li>grading</li><li>mix</li><li>sfx</li></ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="processo">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <h2 data-en="From raw to &lt;em&gt;render&lt;/em&gt;">Do bruto ao <em>render</em></h2>
+        <p data-en="Five stages, each with an approval point. No surprises at delivery.">Cinco etapas, cada uma com um ponto de aprovação. Sem surpresa na entrega.</p>
+      </div>
+      <div class="process">
+        <span class="fill" aria-hidden="true"></span>
+        <div class="step reveal"><span class="tcode">00:00 · IN</span><h3>Briefing</h3><p data-en="Goal, audience, references and where the video will run.">Objetivo, público, referências e onde o vídeo vai rodar.</p></div>
+        <div class="step reveal"><span class="tcode">00:12 · LOG</span><h3 data-en="Logging">Decupagem</h3><p data-en="I watch everything, mark the best takes and build the cut plan.">Assisto tudo, marco os melhores takes e monto o roteiro de corte.</p></div>
+        <div class="step reveal"><span class="tcode">00:30 · CUT</span><h3 data-en="Rough cut">Montagem</h3><p data-en="First cut with pacing and story. You review here.">Primeiro corte com ritmo e narrativa. Você revisa aqui.</p></div>
+        <div class="step reveal"><span class="tcode">00:48 · FX</span><h3 data-en="Finishing">Finalização</h3><p data-en="Motion, color, audio mix and captions.">Motion, cor, mix de áudio e legendas.</p></div>
+        <div class="step reveal"><span class="tcode">01:00 · OUT</span><h3 data-en="Delivery">Entrega</h3><p data-en="Exported in the right formats for each platform, with up to 2 rounds of revisions.">Exporto nos formatos certos para cada plataforma, com até 2 rodadas de ajuste.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="ferramentas">
+    <div class="wrap">
+      <div class="sec-head reveal"><h2 data-en="My &lt;em&gt;toolbox&lt;/em&gt;">Caixa de <em>ferramentas</em></h2></div>
+      <div class="tools reveal">
+        <span class="tool"><i style="background:#2A1B5E;color:#C9A8FF">Pr</i>Premiere Pro</span>
+        <span class="tool"><i style="background:#1B1B5E;color:#B6B6FF">Ae</i>After Effects</span>
+        <span class="tool"><i style="background:var(--hoodie);color:var(--cream)">Ps</i>Photoshop</span>
+        <span class="tool"><i style="background:var(--mint)">Au</i>Audition</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="contato">
+    <div class="wrap">
+      <div class="contact reveal">
+        <img class="ghost" src="assets/logo.webp" alt="">
+        <div>
+          <h2 data-en="Let’s &lt;span&gt;edit?&lt;/span&gt;">Bora <span>editar?</span></h2>
+          <p data-en="Tell me about the project, the deadline and where the video will be posted. I reply within 24 hours.">Me conta o projeto, o prazo e onde o vídeo vai ser publicado. Respondo em até 24 horas.</p>
+          <div class="mail">
+            <code id="email">Jammersonnb@gmail.com</code>
+            <button class="btn magnet" type="button" id="copy" data-en="Copy email">Copiar e-mail</button>
+          </div>
+        </div>
+        <div class="socials">
+          <a href="https://x.com/nynu_aep" target="_blank" rel="noopener">X <span>@nynu_aep</span></a>
+          <a href="https://discord.com/users/1232013955065581739" target="_blank" rel="noopener">Discord <span>nynu</span></a>
+          <a href="https://www.instagram.com/nynu.aep?obrf=MTV1MzViaDh2anFpdQ==" target="_blank" rel="noopener">Instagram <span>@nynu.aep</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap"><span data-en="© 2026 NYNU · Video editor">© 2026 NYNU · Editor de vídeo</span><span class="mono">EXPORT COMPLETE ✓ 100%</span></div></footer>
+
+<div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="mTitle">
+  <div class="player" id="player" style="position:relative">
+    <button class="close" id="close" type="button" aria-label="Fechar">✕</button>
+    <div class="thumb" id="mThumb"></div>
+    <div class="ctrl"><button type="button" id="mPlay" aria-label="Pausar"><svg width="14" height="14" viewBox="0 0 14 14"><rect x="2" y="1" width="3.5" height="12" fill="#0D0D0D"/><rect x="8.5" y="1" width="3.5" height="12" fill="#0D0D0D"/></svg></button><span id="mTime">00:00</span><div class="bar"><i id="mBar"></i></div><span id="mDur">00:00</span></div>
+    <div class="pbody">
+      <h3 id="mTitle"></h3>
+      <p id="mDesc"></p>
+      <div class="row" id="mFacts"></div>
+      <div class="row"><a class="btn" id="mLink" href="#" target="_blank" rel="noopener" data-en="Watch full video">Assistir completo</a></div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- burst behind the logo ---------- */
+(function(){
+  const svg=document.getElementById('burst');
+  function star(n,rOut,rIn,jit,seed){
+    let s=seed,pts=[];
+    const rnd=()=>{s=(s*9301+49297)%233280;return s/233280};
+    for(let i=0;i<n*2;i++){
+      const a=(Math.PI*i)/n - Math.PI/2;
+      const r=(i%2?rIn:rOut)*(1+(rnd()-.5)*jit);
+      pts.push((Math.cos(a)*r).toFixed(1)+','+(Math.sin(a)*r).toFixed(1));
+    }
+    return pts.join(' ');
+  }
+  svg.innerHTML=
+    '<polygon points="'+star(16,98,70,.22,7)+'" fill="#4F3900" stroke="#0D0D0D" stroke-width="3" stroke-linejoin="round"/>'+
+    '<polygon points="'+star(16,88,64,.2,3)+'" fill="#0D0D0D" transform="rotate(8)"/>'+
+    '<polygon points="'+star(12,74,58,.18,11)+'" fill="#FFF5DF" stroke="#0D0D0D" stroke-width="3" stroke-linejoin="round" transform="rotate(-6)"/>';
+})();
+
+/* line boil: re-seed the turbulence a few times a second, like hand-drawn animation */
+if(!reduce){
+  const noise=document.getElementById('boilNoise');let seed=1;
+  setInterval(()=>{seed=(seed%4)+1;noise.setAttribute('seed',seed)},160);
+}
+
+/* ---------- projects: loaded from projects.json (edited at /admin.html) ---------- */
+let projects=[];
+const grid=document.getElementById('grid');
+let lang='pt';
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const L=(p,f)=>{const v=p[f]||{};return (lang==='en'&&v.en)?v.en:(v.pt||v.en||'')};
+const CATS={youtube:{pt:'YouTube',en:'YouTube'},reels:{pt:'Reels',en:'Reels'},comercial:{pt:'Comercial',en:'Commercial'},motion:{pt:'Motion',en:'Motion'}};
+const catLabel=c=>(CATS[c]||{pt:c,en:c})[lang];
+const facts=p=>(p.facts||[]).filter(Boolean);
+function thumbHTML(p){
+  const art=p.thumb?'<img class="art" src="'+esc(p.thumb)+'" alt="">':'<div class="art '+esc(p.art||'a-burst')+'"></div>';
+  return art+'<span class="lb t"></span><span class="lb b"></span>'+(p.word?'<span class="word">'+esc(p.word)+'</span>':'')+'<span class="play"></span><span class="cat">'+esc(catLabel(p.cat))+'</span>'+(p.dur?'<span class="dur">'+esc(p.dur)+'</span>':'')+'<span class="prog"></span>';
+}
+function renderCards(){
+  grid.innerHTML='';
+  if(!projects.length){grid.innerHTML='<p class="empty">'+(lang==='en'?'New videos coming soon.':'Novos vídeos em breve.')+'</p>';return}
+  projects.forEach((p,i)=>{
+    const b=document.createElement('button');
+    b.type='button';b.className='card reveal';b.dataset.cat=p.cat;b.dataset.i=i;
+    const d=L(p,'desc');const short=d.split('. ')[0];
+    b.innerHTML='<div class="thumb">'+thumbHTML(p)+'</div><div class="meta"><h3>'+esc(L(p,'title'))+'</h3>'+(d?'<p>'+esc(short.endsWith('.')?short:short+'.')+'</p>':'')+(facts(p).length?'<div class="facts">'+facts(p).map(f=>'<span>'+esc(f)+'</span>').join('')+'</div>':'')+'</div>';
+    b.addEventListener('click',()=>openModal(i,b));
+    grid.appendChild(b);
+  });
+  const active=document.querySelector('.chip[aria-pressed="true"]');
+  const f=active?active.dataset.f:'all';
+  [...grid.children].forEach(c=>{if(c.dataset.cat)c.hidden=!(f==='all'||c.dataset.cat===f)});
+}
+grid.innerHTML='<p class="empty">'+(document.documentElement.lang==='en'?'Loading videos…':'Carregando vídeos…')+'</p>';
+fetch('projects.json?v='+Date.now(),{cache:'no-store'}).then(r=>{if(!r.ok)throw r;return r.json()})
+  .then(d=>{projects=Array.isArray(d.projects)?d.projects:[];renderCards()})
+  .catch(()=>{projects=[];renderCards()});
+
+/* filters with a springy FLIP shuffle */
+document.querySelectorAll('.chip').forEach(ch=>ch.addEventListener('click',()=>{
+  document.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed',String(c===ch)));
+  const f=ch.dataset.f, cards=[...grid.children];
+  const first=new Map(cards.map(c=>[c,c.getBoundingClientRect()]));
+  cards.forEach(c=>{c.hidden=!(f==='all'||c.dataset.cat===f)});
+  if(reduce)return;
+  cards.forEach(c=>{
+    if(c.hidden)return;
+    const a=first.get(c),b=c.getBoundingClientRect();
+    if(a.width===0){c.animate([{transform:'scale(.6) rotate(-6deg)',opacity:0},{transform:'none',opacity:1}],{duration:520,easing:'cubic-bezier(.34,1.56,.64,1)'});return}
+    const dx=a.left-b.left,dy=a.top-b.top;
+    if(dx||dy)c.animate([{transform:'translate('+dx+'px,'+dy+'px)'},{transform:'none'}],{duration:560,easing:'cubic-bezier(.22,1,.36,1)'});
+  });
+}));
+
+/* modal "player" */
+const modal=document.getElementById('modal'),player=document.getElementById('player'),mBar=document.getElementById('mBar'),mTime=document.getElementById('mTime'),mPlay=document.getElementById('mPlay');
+let raf=null,opener=null,pPlaying=true,prog=0,pLast=null,durSec=0;
+const toSec=s=>{const n=String(s||'').split(':').map(Number);if(n.some(isNaN)||!n.length)return 60;return n.reduce((a,v)=>a*60+v,0)||60};
+const mmss=s=>String(Math.floor(s/60)).padStart(2,'0')+':'+String(Math.floor(s%60)).padStart(2,'0');
+function tick(ts){
+  if(pLast!==null&&pPlaying){prog=(prog+(ts-pLast)/1000*(durSec/12))%durSec}
+  pLast=ts;mBar.style.width=(prog/durSec*100)+'%';mTime.textContent=mmss(prog);
+  raf=requestAnimationFrame(tick);
+}
+function openModal(i,from){
+  const p=projects[i];opener=from;
+  document.getElementById('mThumb').innerHTML=thumbHTML(p);
+  document.getElementById('mTitle').textContent=L(p,'title');
+  document.getElementById('mDesc').textContent=L(p,'desc');
+  document.getElementById('mDur').textContent=p.dur||'';
+  const ml=document.getElementById('mLink');ml.hidden=!p.url;if(p.url)ml.href=p.url;
+  document.getElementById('mFacts').innerHTML=facts(p).map(f=>'<span class="chip" style="cursor:default">'+esc(f)+'</span>').join('');
+  durSec=toSec(p.dur);prog=0;pLast=null;pPlaying=true;
+  modal.hidden=false;document.body.style.overflow='hidden';
+  if(!reduce){
+    const r=from.getBoundingClientRect(),pr=player.getBoundingClientRect();
+    const sx=r.width/pr.width,dx=(r.left+r.width/2)-(pr.left+pr.width/2),dy=(r.top+r.height/2)-(pr.top+pr.height/2);
+    player.animate([{transform:'translate('+dx+'px,'+dy+'px) scale('+sx+')',opacity:.4},{transform:'none',opacity:1}],{duration:560,easing:'cubic-bezier(.34,1.3,.64,1)'});
+    modal.animate([{opacity:0},{opacity:1}],{duration:300});
+  }
+  raf=requestAnimationFrame(tick);
+  document.getElementById('close').focus();
+}
+function closeModal(){
+  if(modal.hidden)return;
+  const done=()=>{modal.hidden=true;document.body.style.overflow='';cancelAnimationFrame(raf);opener&&opener.focus()};
+  if(reduce)return done();
+  player.animate([{transform:'none',opacity:1},{transform:'scale(.85) rotate(3deg)',opacity:0}],{duration:260,easing:'ease-in'}).onfinish=done;
+  modal.animate([{opacity:1},{opacity:0}],{duration:260});
+}
+document.getElementById('close').addEventListener('click',closeModal);
+modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+mPlay.addEventListener('click',()=>{pPlaying=!pPlaying;mPlay.setAttribute('aria-label',pPlaying?'Pausar':'Reproduzir');mPlay.innerHTML=pPlaying?'<svg width="14" height="14" viewBox="0 0 14 14"><rect x="2" y="1" width="3.5" height="12" fill="#0D0D0D"/><rect x="8.5" y="1" width="3.5" height="12" fill="#0D0D0D"/></svg>':'<svg width="14" height="14" viewBox="0 0 14 14"><path d="M3 1l10 6-10 6z" fill="#0D0D0D"/></svg>'});
+
+/* magnetic buttons */
+if(!reduce&&matchMedia('(pointer:fine)').matches){
+  document.querySelectorAll('.magnet').forEach(el=>{
+    el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect();const x=(e.clientX-r.left-r.width/2)*.25,y=(e.clientY-r.top-r.height/2)*.35;el.style.transform='translate('+x+'px,'+y+'px)'});
+    el.addEventListener('pointerleave',()=>{el.animate([{transform:el.style.transform||'none'},{transform:'none'}],{duration:500,easing:'cubic-bezier(.34,1.56,.64,1)'});el.style.transform=''});
+  });
+  /* logo sticker follows the pointer a little */
+  const stage=document.getElementById('stage'),st=stage.querySelector('.sticker');
+  stage.addEventListener('pointermove',e=>{const r=stage.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;st.style.translate=(x*18)+'px '+(y*18)+'px'});
+  stage.addEventListener('pointerleave',()=>{st.style.translate=''});
+  st.style.transition='transform .5s cubic-bezier(.34,1.56,.64,1), translate .4s cubic-bezier(.22,1,.36,1)';
+}
+
+/* language toggle */
+const i18n=[...document.querySelectorAll('[data-en]')];
+i18n.forEach(el=>{el.dataset.pt=el.innerHTML});
+const langBtn=document.getElementById('lang');
+function setLang(l,animate){
+  lang=l;document.documentElement.lang=l==='en'?'en':'pt-BR';
+  const swap=()=>{i18n.forEach(el=>{el.innerHTML=l==='en'?el.dataset.en:el.dataset.pt});renderCards();
+    langBtn.setAttribute('aria-label',l==='en'?'Mudar para português':'Switch to English');document.title=l==='en'?'NYNU Edits':'NYNU Edits'};
+  if(!animate||reduce)return swap();
+  const main=document.querySelector('main');
+  main.animate([{opacity:1,filter:'blur(0)'},{opacity:.15,filter:'blur(6px)'}],{duration:180,easing:'ease-in'}).onfinish=()=>{swap();
+    main.animate([{opacity:.15,filter:'blur(6px)',transform:'translateY(8px)'},{opacity:1,filter:'blur(0)',transform:'none'}],{duration:380,easing:'cubic-bezier(.22,1,.36,1)'})};
+}
+langBtn.addEventListener('click',()=>{const n=lang==='en'?'pt':'en';setLang(n,true);try{localStorage.setItem('nynu-lang',n)}catch(e){}});
+document.documentElement.lang='pt-BR';
+try{const s=localStorage.getItem('nynu-lang');if(s==='en')setLang('en',false)}catch(e){}
+
+/* copy email */
+const toast=document.getElementById('toast');let tt;
+function showToast(m){toast.textContent=m;toast.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>toast.classList.remove('show'),2200)}
+document.getElementById('copy').addEventListener('click',()=>{
+  const em=document.getElementById('email');
+  navigator.clipboard.writeText(em.textContent).then(()=>showToast(lang==='en'?'Email copied ✓':'E-mail copiado ✓')).catch(()=>{const s=getSelection(),r=document.createRange();r.selectNodeContents(em);s.removeAllRanges();s.addRange(r);showToast(lang==='en'?'Email selected, just copy it':'E-mail selecionado, é só copiar')});
+});
+})();
+</script>
+</body>
+</html>
