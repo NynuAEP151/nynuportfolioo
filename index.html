@@ -273,11 +273,20 @@ function tick(ts){
 }
 function openModal(i,from){
   const p=projects[i];opener=from;
-  document.getElementById('mThumb').innerHTML=thumbHTML(p);
+  const yt=ytId(p.url),mt=document.getElementById('mThumb'),ctrl=document.querySelector('.player .ctrl');
+  if(yt){
+    // YouTube link: play the real video right here
+    mt.className='thumb yt'+(/\/shorts\//i.test(p.url)?' short':'');
+    mt.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+yt+'?autoplay=1&rel=0&playsinline=1" title="'+esc(L(p,'title'))+'" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
+    ctrl.hidden=true;
+  }else{
+    mt.className='thumb';mt.innerHTML=thumbHTML(p);ctrl.hidden=false;
+  }
   document.getElementById('mTitle').textContent=L(p,'title');
   document.getElementById('mDesc').textContent=L(p,'desc');
   document.getElementById('mDur').textContent=p.dur||'';
   const ml=document.getElementById('mLink');ml.hidden=!p.url;if(p.url)ml.href=p.url;
+  ml.textContent=ytId(p.url)?(lang==='en'?'Open on YouTube':'Abrir no YouTube'):(lang==='en'?'Watch full video':'Assistir completo');
   document.getElementById('mFacts').innerHTML=facts(p).map(f=>'<span class="chip" style="cursor:default">'+esc(f)+'</span>').join('');
   durSec=toSec(p.dur);prog=0;pLast=null;pPlaying=true;
   modal.hidden=false;document.body.style.overflow='hidden';
@@ -287,12 +296,12 @@ function openModal(i,from){
     player.animate([{transform:'translate('+dx+'px,'+dy+'px) scale('+sx+')',opacity:.4},{transform:'none',opacity:1}],{duration:560,easing:'cubic-bezier(.34,1.3,.64,1)'});
     modal.animate([{opacity:0},{opacity:1}],{duration:300});
   }
-  raf=requestAnimationFrame(tick);
+  if(!yt)raf=requestAnimationFrame(tick);
   document.getElementById('close').focus();
 }
 function closeModal(){
   if(modal.hidden)return;
-  const done=()=>{modal.hidden=true;document.body.style.overflow='';cancelAnimationFrame(raf);opener&&opener.focus()};
+  const done=()=>{modal.hidden=true;document.getElementById('mThumb').innerHTML='';document.body.style.overflow='';cancelAnimationFrame(raf);opener&&opener.focus()};
   if(reduce)return done();
   player.animate([{transform:'none',opacity:1},{transform:'scale(.85) rotate(3deg)',opacity:0}],{duration:260,easing:'ease-in'}).onfinish=done;
   modal.animate([{opacity:1},{opacity:0}],{duration:260});
