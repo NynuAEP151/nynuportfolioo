@@ -31,12 +31,17 @@
     </nav>
     <button class="lang" id="lang" type="button" aria-label="Switch to English"><i class="knob" aria-hidden="true"></i><span>PT</span><span>EN</span></button>
   </div>
+  <div class="playbar" aria-hidden="true"><i id="playbar"></i></div>
 </header>
 
 <main id="top">
   <section class="hero">
+    <i class="blob blob-hero" aria-hidden="true"></i>
     <div class="wrap">
-      <div>
+      <div class="hero-copy">
+        <i class="spark" style="--x:-14px;--y:58px;--s:22px;--d:0s" aria-hidden="true"></i>
+        <i class="spark" style="--x:72%;--y:96px;--s:30px;--d:.8s" aria-hidden="true"></i>
+        <i class="spark" style="--x:58%;--y:300px;--s:16px;--d:1.6s" aria-hidden="true"></i>
         <span class="eyebrow" data-en="▶ Video editor · Motion">▶ Editor de vídeo · Motion</span>
         <h1>
           <span class="ln"><span data-en="Ideas">Ideias que</span></span>
@@ -76,6 +81,7 @@
   </section>
 
   <section class="block" id="servicos">
+    <i class="blob blob-right" aria-hidden="true"></i>
     <div class="wrap">
       <div class="sec-head reveal">
         <h2 data-en="What I &lt;em&gt;do&lt;/em&gt;">O que eu <em>faço</em></h2>
@@ -111,6 +117,7 @@
   </section>
 
   <section class="block" id="processo">
+    <i class="blob blob-left" aria-hidden="true"></i>
     <div class="wrap">
       <div class="sec-head reveal">
         <h2 data-en="From raw to &lt;em&gt;render&lt;/em&gt;">Do bruto ao <em>render</em></h2>
@@ -142,6 +149,8 @@
     <div class="wrap">
       <div class="contact reveal">
         <img class="ghost" src="assets/logo.webp" alt="">
+        <i class="spark" style="--x:auto;--y:22px;--r:30px;--s:28px;--d:.4s" aria-hidden="true"></i>
+        <i class="spark" style="--x:auto;--y:70px;--r:76px;--s:16px;--d:1.2s" aria-hidden="true"></i>
         <div>
           <h2 data-en="Let’s &lt;span&gt;edit?&lt;/span&gt;">Bora <span>editar?</span></h2>
           <p data-en="Tell me about the project, the deadline and where the video will be posted. I reply within 24 hours.">Me conta o projeto, o prazo e onde o vídeo vai ser publicado. Respondo em até 24 horas.</p>
@@ -160,7 +169,16 @@
   </section>
 </main>
 
-<footer><div class="wrap"><span data-en="© 2026 NYNU · Video editor">© 2026 NYNU · Editor de vídeo</span><span class="mono">EXPORT COMPLETE ✓ 100%</span></div></footer>
+<footer>
+  <div class="wrap">
+    <div class="foot-word" aria-hidden="true">NYNU</div>
+    <div class="foot-row">
+      <span data-en="© 2026 NYNU · Video editor">© 2026 NYNU · Editor de vídeo</span>
+      <span class="mono">EXPORT COMPLETE ✓ 100%</span>
+      <a class="totop" href="#top" data-en="↑ Back to top">↑ Voltar ao topo</a>
+    </div>
+  </div>
+</footer>
 
 <div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="mTitle">
   <div class="player" id="player" style="position:relative">
@@ -228,11 +246,21 @@ function thumbHTML(p){
 function renderCards(){
   grid.innerHTML='';
   if(!projects.length){grid.innerHTML='<p class="empty">'+(lang==='en'?'New videos coming soon.':'Novos vídeos em breve.')+'</p>';return}
+  grid.dataset.count=Math.min(projects.length,3);
+  const solo=projects.length===1;
+  // show only the filters that have videos; hide the row when there is nothing to filter
+  const used=new Set(projects.map(p=>p.cat));
+  document.querySelectorAll('.chip').forEach(c=>{if(c.dataset.f!=='all')c.hidden=!used.has(c.dataset.f)});
+  const chipRow=document.querySelector('.chips');if(chipRow)chipRow.hidden=used.size<2;
   projects.forEach((p,i)=>{
     const b=document.createElement('button');
-    b.type='button';b.className='card reveal';b.dataset.cat=p.cat;b.dataset.i=i;
+    b.type='button';b.className='card reveal'+(solo?' featured':'');b.dataset.cat=p.cat;b.dataset.i=i;
     const d=L(p,'desc');const short=d.split('. ')[0];
     b.innerHTML='<div class="thumb">'+thumbHTML(p)+'</div><div class="meta"><h3>'+esc(L(p,'title'))+'</h3>'+(d?'<p>'+esc(short.endsWith('.')?short:short+'.')+'</p>':'')+(facts(p).length?'<div class="facts">'+facts(p).map(f=>'<span>'+esc(f)+'</span>').join('')+'</div>':'')+'</div>';
+    if(solo){
+      b.querySelector('.thumb').insertAdjacentHTML('beforeend','<span class="feat-badge">'+(lang==='en'?'★ Featured':'★ Em destaque')+'</span>');
+      b.querySelector('.meta').insertAdjacentHTML('beforeend','<span class="watch">'+(ytId(p.url)?(lang==='en'?'▶ Watch now':'▶ Assistir agora'):(lang==='en'?'▶ See project':'▶ Ver projeto'))+'</span>');
+    }
     b.addEventListener('click',()=>openModal(i,b));
     grid.appendChild(b);
   });
@@ -244,6 +272,11 @@ grid.innerHTML='<p class="empty">'+(document.documentElement.lang==='en'?'Loadin
 fetch('projects.json?v='+Date.now(),{cache:'no-store'}).then(r=>{if(!r.ok)throw r;return r.json()})
   .then(d=>{projects=Array.isArray(d.projects)?d.projects:[];renderCards()})
   .catch(()=>{projects=[];renderCards()});
+
+/* scroll progress shown as a timeline playhead under the header */
+(function(){const bar=document.getElementById('playbar');let t=0;
+  function upd(){t=0;const max=document.documentElement.scrollHeight-innerHeight;bar.style.transform='scaleX('+(max>0?Math.min(1,scrollY/max):0)+')'}
+  addEventListener('scroll',()=>{if(!t)t=requestAnimationFrame(upd)},{passive:true});addEventListener('resize',upd);upd();})();
 
 /* filters with a springy FLIP shuffle */
 document.querySelectorAll('.chip').forEach(ch=>ch.addEventListener('click',()=>{

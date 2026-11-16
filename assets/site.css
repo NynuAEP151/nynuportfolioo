@@ -314,6 +314,66 @@ img.art{width:100%;height:100%;object-fit:cover;display:block}
   .tag.t3{display:none}
   .tag.t1{right:0}.tag.t2{left:0}
 }
+/* ================= design details ================= */
+/* header: timeline playhead for scroll progress + spiky bottom edge like the logo's spikes */
+header::after{content:"";position:absolute;left:0;right:0;top:100%;height:15px;pointer-events:none;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='12'%3E%3Cpath d='M0 0h24L12 12z' fill='%230D0D0D'/%3E%3C/svg%3E") 0 0/24px 12px repeat-x,url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='12'%3E%3Cpath d='M0 0h24L12 12z' fill='%23FFF5DF'/%3E%3C/svg%3E") 0 3px/24px 12px repeat-x}
+.playbar{position:absolute;left:0;right:0;bottom:0;height:4px;background:#262626;overflow:visible}
+.playbar i{position:absolute;inset:0;background:var(--mustard);transform-origin:left;transform:scaleX(0)}
+.playbar i::after{content:"";position:absolute;right:-1px;top:-4px;width:3px;height:12px;background:#FF3B30;border-radius:2px}
+
+/* soft spiky shapes behind sections */
+section{position:relative}
+.blob{position:absolute;z-index:-1;pointer-events:none;width:min(560px,70vw);aspect-ratio:1;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-110 -110 220 220'%3E%3Cpolygon points='0,-102 18,-77 45,-94 48,-61 82,-66 63,-30 89,-20 66,0 114,26 64,31 74,59 48,60 45,94 17,76 0,94 -17,72 -48,100 -44,56 -75,60 -62,30 -94,21 -75,0 -111,-25 -70,-34 -81,-64 -49,-62 -47,-97 -18,-78' fill='%23E9A300'/%3E%3C/svg%3E") center/contain no-repeat;animation:blobSpin 90s linear infinite}
+.blob-hero{left:-180px;top:-120px;width:min(460px,70vw);opacity:.9}
+.blob-right{right:-200px;top:40px}
+.blob-left{left:-220px;top:80px;animation-direction:reverse}
+@keyframes blobSpin{to{rotate:360deg}}
+
+/* twinkling sparkles */
+.hero-copy{position:relative}
+.spark{position:absolute;left:var(--x,auto);right:var(--r,auto);top:var(--y,0);width:var(--s,20px);height:var(--s,20px);pointer-events:none;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-2 -2 28 28'%3E%3Cpath d='M12 0C13 8 16 11 24 12C16 13 13 16 12 24C11 16 8 13 0 12C8 11 11 8 12 0Z' fill='%23FFF5DF' stroke='%230D0D0D' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;animation:twinkle 2.8s var(--d,0s) ease-in-out infinite}
+@keyframes twinkle{0%,100%{transform:scale(1) rotate(0)}50%{transform:scale(.55) rotate(45deg)}}
+
+/* brush stroke under the highlighted word of each section title, painted on as it scrolls in */
+.sec-head h2 em{position:relative;display:inline-block;z-index:0}
+.sec-head h2 em::after{content:"";position:absolute;z-index:-1;left:-4%;right:-4%;bottom:-.06em;height:.34em;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 20' preserveAspectRatio='none'%3E%3Cpath d='M3 12C40 5 80 4 120 7S180 12 197 8L196 15C160 19 120 14 80 15S20 18 4 18Z' fill='%231173A6'/%3E%3C/svg%3E") center/100% 100% no-repeat;transform-origin:left;
+  animation:brushIn linear both;animation-timeline:view();animation-range:entry 40% cover 35%}
+@keyframes brushIn{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+/* featured card when there is a single video */
+.grid[data-count="1"]{grid-template-columns:1fr}
+.grid[data-count="2"]{grid-template-columns:repeat(2,1fr)}
+.feat-badge{position:absolute;top:16%;left:14px;z-index:3;font-family:var(--font-display);font-size:15px;letter-spacing:.02em;background:var(--mustard);color:var(--ink);
+  border:3px solid var(--ink);border-radius:10px;padding:4px 10px;box-shadow:3px 3px 0 var(--ink);transform:rotate(-5deg)}
+.card.featured .meta{gap:10px}
+.card.featured .watch{align-self:flex-start;margin-top:6px;font-weight:800;font-size:15px;background:var(--ink);color:var(--mustard);border-radius:12px;padding:10px 16px;box-shadow:3px 3px 0 var(--cocoa);transition:transform .35s var(--pop)}
+.card.featured:hover .watch{transform:translateX(4px)}
+@media (min-width:760px){
+  .card.featured{flex-direction:row;align-items:stretch}
+  .card.featured .thumb{flex:0 0 62%;border-bottom:0;border-right:4px solid var(--ink);aspect-ratio:16/9}
+  .card.featured .meta{justify-content:center;padding:28px 30px}
+  .card.featured .meta h3{font-size:clamp(26px,2.8vw,38px)}
+  .card.featured .meta p{font-size:16px}
+}
+
+/* footer: ink band with spiky top edge and a big outlined wordmark */
+footer{position:relative;margin-top:40px;background:var(--ink);color:var(--cream)}
+footer::before{content:"";position:absolute;left:0;right:0;bottom:100%;height:16px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='16'%3E%3Cpath d='M0 16h32L16 0z' fill='%230D0D0D'/%3E%3C/svg%3E") 0 0/32px 16px repeat-x}
+footer .wrap{display:block;padding-block:26px 34px}
+.foot-word{font-family:var(--font-display);font-size:clamp(84px,21vw,280px);line-height:.85;letter-spacing:.02em;color:transparent;-webkit-text-stroke:2px var(--mustard);text-align:center;user-select:none;transition:color .5s}
+footer:hover .foot-word{color:var(--mustard)}
+.foot-row{display:flex;justify-content:space-between;align-items:center;gap:12px 20px;flex-wrap:wrap;margin-top:22px;font-family:var(--font-mono);font-size:12px;font-weight:700}
+.totop{text-decoration:none;border:2px solid var(--cream);border-radius:999px;padding:6px 12px;transition:background .25s,color .25s}
+.totop:hover{background:var(--mustard);color:var(--ink);border-color:var(--mustard)}
+@media (max-width:560px){
+  .grid[data-count="2"]{grid-template-columns:1fr}
+  .blob{opacity:.7}
+  .foot-row{justify-content:center;text-align:center}
+}
+
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
 }
