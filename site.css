@@ -21,8 +21,25 @@
 html{-webkit-text-size-adjust:100%}
 img{max-width:100%}
 [hidden]{display:none!important}
-html{scroll-behavior:smooth}
-body{margin:0;padding-top:env(safe-area-inset-top,0px);background:var(--mustard);position:relative;isolation:isolate;color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.55;overflow-x:hidden}
+html{scroll-behavior:smooth;overflow-x:hidden;overflow-x:clip;background:var(--ink)}
+
+/* ---------- scrollbar ---------- */
+/* Desktop (mouse): ink track with a mustard handle in the site's sticker style */
+@media (pointer:fine){
+  html{scrollbar-color:var(--mustard) var(--ink);scrollbar-width:auto}
+  ::-webkit-scrollbar{width:14px;height:14px}
+  ::-webkit-scrollbar-track{background:var(--ink)}
+  ::-webkit-scrollbar-thumb{background:var(--mustard);border:3px solid var(--ink);border-radius:999px;box-shadow:inset 0 0 0 2px var(--cream)}
+  ::-webkit-scrollbar-thumb:hover{background:#FFC629}
+  ::-webkit-scrollbar-thumb:active{background:var(--cream)}
+  ::-webkit-scrollbar-corner{background:var(--ink)}
+}
+/* Phones and tablets (touch): no visible scrollbar */
+@media (pointer:coarse){
+  html,body{scrollbar-width:none}
+  ::-webkit-scrollbar{display:none;width:0;height:0}
+}
+body{margin:0;padding-top:env(safe-area-inset-top,0px);background:var(--mustard);position:relative;isolation:isolate;color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.55;overflow-x:hidden;overflow-x:clip}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--ink)}
 ::selection{background:var(--ink);color:var(--mustard)}
 a{color:inherit}
@@ -284,6 +301,15 @@ img.art{width:100%;height:100%;object-fit:cover;display:block}
   .contact{grid-template-columns:1fr}
 }
 @media (max-width:560px){
+  .stage{max-width:320px}
+  .burst{inset:-4%;width:108%;height:108%}
+  .hero h1{font-size:clamp(40px,12.5vw,60px)}
+  .sec-head{margin-bottom:22px}
+  section.block .wrap{padding-block:44px}
+  .ctas .btn{flex:1 1 auto;justify-content:center}
+  .contact .ghost{width:200px;right:-50px;bottom:-50px}
+  .player{border-width:4px;border-radius:18px;box-shadow:6px 6px 0 var(--ink)}
+  .close{top:8px;right:8px;width:38px;height:38px}
   .grid,.svc{grid-template-columns:1fr}
   .tag.t3{display:none}
   .tag.t1{right:0}.tag.t2{left:0}
