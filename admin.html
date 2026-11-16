@@ -85,7 +85,7 @@
           <div class="thumb-pick"><div class="thumb" id="fThumbPrev"></div>
             <div class="tp-actions"><label class="btn alt sm" for="fThumb">Enviar imagem</label><input type="file" id="fThumb" accept="image/*" hidden><button class="btn alt sm" type="button" id="fThumbClear">Remover</button></div>
           </div>
-          <small>JPG, PNG ou WEBP, de preferência 16:9. Sem imagem, o card usa um fundo ilustrado.</small>
+          <small>Opcional. Com link do YouTube, a miniatura do vídeo é usada automaticamente. Envie uma imagem só se quiser outra capa.</small>
         </div>
         <div class="fld"><span>Fundo ilustrado (quando não há imagem)</span><div class="swatches" id="fArt" role="radiogroup"></div></div>
         <label class="fld"><span>Texto grande na capa <em>(opcional)</em></span><input id="fWord" maxlength="12" placeholder="Ex.: GG!, 24H, NOVO"></label>
@@ -101,7 +101,7 @@
           <label class="fld"><span>Categoria</span><select id="fCat"><option value="youtube">YouTube</option><option value="reels">Reels</option><option value="comercial">Comercial</option><option value="motion">Motion</option></select></label>
           <label class="fld"><span>Duração</span><input id="fDur" placeholder="mm:ss" maxlength="8" inputmode="numeric"></label>
         </div>
-        <label class="fld"><span>Link do vídeo</span><input id="fUrl" type="url" placeholder="https://youtube.com/watch?v=…"><small>YouTube, Instagram, Drive, Vimeo… O botão "Assistir completo" abre esse link.</small></label>
+        <label class="fld"><span>Link do vídeo</span><input id="fUrl" type="url" placeholder="https://youtube.com/watch?v=…"><small>YouTube, Instagram, Drive, Vimeo… O botão "Assistir completo" abre esse link. Se for do YouTube, a miniatura do vídeo entra sozinha, a menos que você envie outra imagem.</small></label>
         <label class="fld"><span>Detalhes</span><input id="fFacts" placeholder="16:9, 4K, Premiere"><small>Separe por vírgula.</small></label>
         <p class="dr-error" id="fErr" role="alert" hidden></p>
         <div class="dr-form-actions"><button class="btn" type="submit">Salvar vídeo</button><button class="btn alt" type="button" id="drCancel">Cancelar</button></div>
@@ -170,10 +170,15 @@ window.addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.return
 /* ---------- list ---------- */
 const status=$('drStatus'),pubBtn=$('drPublish'),bar=document.querySelector('.dr-bar');
 function setDirty(v,msg){dirty=v;bar.classList.toggle('dirty',v);pubBtn.disabled=!v||busy;status.textContent=msg||(v?'Alterações não publicadas':'Tudo publicado')}
+
+/* YouTube: a video link gives its own thumbnail when no image was uploaded */
+function ytId(u){const m=String(u||'').match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?(?:.*&)?v=|shorts\/|embed\/|live\/|v\/))([\w-]{11})/i);return m?m[1]:''}
+function ytImg(id){return '<img class="art" src="https://i.ytimg.com/vi/'+id+'/maxresdefault.jpg" data-yt="'+id+'" alt="" loading="lazy" onload="ytFix(this)" onerror="ytFix(this,1)">'}
+window.ytFix=function(img,err){const hq='https://i.ytimg.com/vi/'+img.dataset.yt+'/hqdefault.jpg';if(err&&img.src===hq){const d=document.createElement('div');d.className='art a-burst';img.replaceWith(d);return}if((err||img.naturalWidth<=120)&&img.src!==hq)img.src=hq};
 function thumbSrc(p){return p._new||p._shown||p.thumb||''}
 function thumbHTML(p){
-  const src=thumbSrc(p);
-  const art=src?'<img class="art" src="'+esc(src)+'" alt="">':'<div class="art '+esc(p.art||'a-burst')+'"></div>';
+  const src=thumbSrc(p),yt=!src&&ytId(p.url);
+  const art=src?'<img class="art" src="'+esc(src)+'" alt="">':yt?ytImg(yt):'<div class="art '+esc(p.art||'a-burst')+'"></div>';
   return art+'<span class="lb t"></span><span class="lb b"></span>'+(p.word?'<span class="word">'+esc(p.word)+'</span>':'')+'<span class="cat">'+esc(CATS[p.cat]||p.cat)+'</span>'+(p.dur?'<span class="dur">'+esc(p.dur)+'</span>':'');
 }
 function renderList(){
@@ -181,8 +186,8 @@ function renderList(){
   if(!projects.length){list.innerHTML='<p class="dr-hint">Nenhum vídeo ainda. Clique em <b>Adicionar vídeo</b>.</p>';return}
   projects.forEach((p,i)=>{
     const row=document.createElement('div');row.className='dr-item';
-    const src=thumbSrc(p);
-    const mini=src?'<img class="art" src="'+esc(src)+'" alt="" style="width:100%;height:100%;object-fit:cover">':'<div class="art '+esc(p.art||'a-burst')+'"></div>';
+    const src=thumbSrc(p),yt=!src&&ytId(p.url);
+    const mini=src?'<img class="art" src="'+esc(src)+'" alt="" style="width:100%;height:100%;object-fit:cover">':yt?ytImg(yt):'<div class="art '+esc(p.art||'a-burst')+'"></div>';
     row.innerHTML='<div class="mini">'+mini+'</div><div style="min-width:0"><b>'+esc((p.title||{}).pt||(p.title||{}).en||'Sem título')+'</b><small>'+esc(CATS[p.cat]||p.cat)+(p.dur?' · '+esc(p.dur):'')+(p.url?' · link ✓':' · sem link')+'</small></div>'+
       '<div class="dr-acts"><button class="ib" type="button" data-a="up" aria-label="Mover para cima" '+(i===0?'disabled':'')+'>↑</button><button class="ib" type="button" data-a="down" aria-label="Mover para baixo" '+(i===projects.length-1?'disabled':'')+'>↓</button><button class="ib" type="button" data-a="edit" aria-label="Editar">✎</button><button class="ib del" type="button" data-a="del" aria-label="Excluir">🗑</button></div>';
     row.querySelector('.dr-acts').addEventListener('click',e=>{
@@ -202,12 +207,12 @@ function changed(msg){renderList();setDirty(true,msg+' · falta publicar')}
 /* ---------- form ---------- */
 const form=$('drForm'),listView=$('drListView');
 function paintThumb(){
-  $('fThumbPrev').innerHTML=thumbHTML({_new:formNew?formThumb:'',thumb:formNew?'':formThumb,art:formArt,word:$('fWord').value.trim(),cat:$('fCat').value,dur:$('fDur').value.trim()});
+  $('fThumbPrev').innerHTML=thumbHTML({_new:formNew?formThumb:'',thumb:formNew?'':formThumb,url:$('fUrl').value.trim(),art:formArt,word:$('fWord').value.trim(),cat:$('fCat').value,dur:$('fDur').value.trim()});
   $('fThumbClear').hidden=!formThumb;
   [...$('fArt').children].forEach(s=>s.setAttribute('aria-checked',String(s.dataset.art===formArt)));
 }
 ARTS.forEach(a=>{const s=document.createElement('button');s.type='button';s.className='swatch '+a;s.dataset.art=a;s.setAttribute('role','radio');s.setAttribute('aria-label','Fundo '+a.slice(2));s.addEventListener('click',()=>{formArt=a;paintThumb()});$('fArt').appendChild(s)});
-['fWord','fCat','fDur'].forEach(id=>$(id).addEventListener('input',paintThumb));
+['fWord','fCat','fDur','fUrl'].forEach(id=>$(id).addEventListener('input',paintThumb));
 function openForm(i){
   editing=i;const p=i==null?{title:{},desc:{},cat:'youtube',facts:[],art:ARTS[Math.floor(Math.random()*ARTS.length)]}:projects[i];
   $('drFormTitle').textContent=i==null?'Novo vídeo':'Editar vídeo';

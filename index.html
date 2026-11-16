@@ -39,9 +39,9 @@
       <div>
         <span class="eyebrow" data-en="▶ Video editor · Motion">▶ Editor de vídeo · Motion</span>
         <h1>
-          <span class="ln"><span data-en="Videos that hook">Vídeos que prendem</span></span>
-          <span class="ln"><span class="stroke" data-en="from the first">do primeiro</span></span>
-          <span class="ln"><span data-en="to the &lt;span class=&quot;blue&quot;&gt;last frame.&lt;/span&gt;">ao <span class="blue">último frame.</span></span></span>
+          <span class="ln"><span data-en="Ideas">Ideias que</span></span>
+          <span class="ln"><span class="stroke" data-en="set in">ganham</span></span>
+          <span class="ln"><span class="blue" data-en="motion">movimento</span></span>
         </h1>
         <p class="lede" data-en="I edit videos for YouTube, Reels and brands that want to be watched to the very end. Editing, motion graphics, color and sound in one package.">Edito vídeos para YouTube, Reels e marcas que querem ser assistidos até o último frame. Montagem, motion graphics, cor e som num pacote só.</p>
         <div class="ctas">
@@ -134,7 +134,6 @@
         <span class="tool"><i style="background:#2A1B5E;color:#C9A8FF">Pr</i>Premiere Pro</span>
         <span class="tool"><i style="background:#1B1B5E;color:#B6B6FF">Ae</i>After Effects</span>
         <span class="tool"><i style="background:var(--hoodie);color:var(--cream)">Ps</i>Photoshop</span>
-        <span class="tool"><i style="background:var(--mint)">Au</i>Audition</span>
       </div>
     </div>
   </section>
@@ -216,8 +215,14 @@ const L=(p,f)=>{const v=p[f]||{};return (lang==='en'&&v.en)?v.en:(v.pt||v.en||''
 const CATS={youtube:{pt:'YouTube',en:'YouTube'},reels:{pt:'Reels',en:'Reels'},comercial:{pt:'Comercial',en:'Commercial'},motion:{pt:'Motion',en:'Motion'}};
 const catLabel=c=>(CATS[c]||{pt:c,en:c})[lang];
 const facts=p=>(p.facts||[]).filter(Boolean);
+
+/* YouTube: a video link gives its own thumbnail when no image was uploaded */
+function ytId(u){const m=String(u||'').match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?(?:.*&)?v=|shorts\/|embed\/|live\/|v\/))([\w-]{11})/i);return m?m[1]:''}
+function ytImg(id){return '<img class="art" src="https://i.ytimg.com/vi/'+id+'/maxresdefault.jpg" data-yt="'+id+'" alt="" loading="lazy" onload="ytFix(this)" onerror="ytFix(this,1)">'}
+window.ytFix=function(img,err){const hq='https://i.ytimg.com/vi/'+img.dataset.yt+'/hqdefault.jpg';if(err&&img.src===hq){const d=document.createElement('div');d.className='art a-burst';img.replaceWith(d);return}if((err||img.naturalWidth<=120)&&img.src!==hq)img.src=hq};
 function thumbHTML(p){
-  const art=p.thumb?'<img class="art" src="'+esc(p.thumb)+'" alt="">':'<div class="art '+esc(p.art||'a-burst')+'"></div>';
+  const yt=!p.thumb&&ytId(p.url);
+  const art=p.thumb?'<img class="art" src="'+esc(p.thumb)+'" alt="">':yt?ytImg(yt):'<div class="art '+esc(p.art||'a-burst')+'"></div>';
   return art+'<span class="lb t"></span><span class="lb b"></span>'+(p.word?'<span class="word">'+esc(p.word)+'</span>':'')+'<span class="play"></span><span class="cat">'+esc(catLabel(p.cat))+'</span>'+(p.dur?'<span class="dur">'+esc(p.dur)+'</span>':'')+'<span class="prog"></span>';
 }
 function renderCards(){
