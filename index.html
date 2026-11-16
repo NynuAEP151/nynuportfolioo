@@ -80,6 +80,23 @@
     </div>
   </section>
 
+  <section class="views" id="views" aria-labelledby="viewsTitle">
+    <div class="wrap">
+      <div class="views-card reveal">
+        <i class="spark" style="--x:auto;--r:34px;--y:26px;--s:30px;--d:.3s" aria-hidden="true"></i>
+        <i class="spark" style="--x:auto;--r:86px;--y:78px;--s:16px;--d:1.1s" aria-hidden="true"></i>
+        <span class="views-eyebrow" id="viewsTitle" data-en="▶ View count">▶ Contagem de views</span>
+        <div class="views-num" id="viewsBox" role="img" aria-label="+5.000.000"><span class="views-plus" aria-hidden="true">+</span><span id="viewsNum" class="odo" aria-hidden="true">5.000.000</span></div>
+        <p class="views-label" data-en="views on videos I edited for clients, across every platform">de views em vídeos que editei para clientes, somando todas as plataformas</p>
+        <div class="views-plats">
+          <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12 31 31 0 0 0 1 16.8a3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8zM9.7 15.1V8.9l5.8 3.1z" fill="currentColor"/></svg>YouTube</span>
+          <span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="12" cy="12" r="4.3" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="17.6" cy="6.4" r="1.4" fill="currentColor"/></svg>Instagram</span>
+          <span data-en="+ other platforms">+ outras plataformas</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="block" id="servicos">
     <i class="blob blob-right" aria-hidden="true"></i>
     <div class="wrap">
@@ -171,10 +188,8 @@
 
 <footer>
   <div class="wrap">
-    <div class="foot-word" aria-hidden="true">NYNU</div>
     <div class="foot-row">
       <span data-en="© 2026 NYNU · Video editor">© 2026 NYNU · Editor de vídeo</span>
-      <span class="mono">EXPORT COMPLETE ✓ 100%</span>
       <a class="totop" href="#top" data-en="↑ Back to top">↑ Voltar ao topo</a>
     </div>
   </div>
@@ -243,9 +258,49 @@ function thumbHTML(p){
   const art=p.thumb?'<img class="art" src="'+esc(p.thumb)+'" alt="">':yt?ytImg(yt):'<div class="art '+esc(p.art||'a-burst')+'"></div>';
   return art+'<span class="lb t"></span><span class="lb b"></span>'+(p.word?'<span class="word">'+esc(p.word)+'</span>':'')+'<span class="play"></span><span class="cat">'+esc(catLabel(p.cat))+'</span>'+(p.dur?'<span class="dur">'+esc(p.dur)+'</span>':'')+'<span class="prog"></span>';
 }
+/* ---------- view counter: rolling odometer digits ---------- */
+let VIEWS=5000000;
+const fmtN=n=>Math.round(n).toLocaleString(lang==='en'?'en-US':'pt-BR');
+function buildOdo(){
+  const el=document.getElementById('viewsNum');if(!el)return;
+  const txt=fmtN(VIEWS);
+  document.getElementById('viewsBox').setAttribute('aria-label','+'+txt);
+  let html='',k=0;
+  for(const ch of txt){
+    if(/\d/.test(ch)){
+      let strip='';for(let r=0;r<3;r++)for(let n=0;n<10;n++)strip+='<i>'+n+'</i>';
+      html+='<span class="odo-d" data-n="'+ch+'" style="--k:'+(k++)+'"><span class="odo-s">'+strip+'</span></span>';
+    }else html+='<span class="odo-sep">'+ch+'</span>';
+  }
+  el.innerHTML=html;setOdo(true);
+}
+// at rest the final number is shown; "spin" rolls every digit from zero to its value
+function setOdo(final){
+  document.querySelectorAll('#viewsNum .odo-d').forEach(d=>{
+    const s=d.firstChild,n=+d.dataset.n;
+    s.style.transition='none';s.style.transform='translateY(calc(-1.08em * '+(final?20+n:0)+'))';
+  });
+}
+function spinOdo(){
+  if(reduce)return;
+  setOdo(false);void document.getElementById('viewsNum').offsetWidth;
+  document.querySelectorAll('#viewsNum .odo-d').forEach(d=>{
+    const s=d.firstChild,n=+d.dataset.n,k=+d.style.getPropertyValue('--k');
+    s.style.transition='transform '+(1.4+k*.12)+'s cubic-bezier(.16,1,.3,1) '+(k*.07)+'s';
+    s.style.transform='translateY(calc(-1.08em * '+(20+n)+'))';
+  });
+}
+function showViews(){buildOdo()}
+buildOdo();
+if('IntersectionObserver' in window){
+  const vc=document.querySelector('.views-card');
+  // spin each time the card comes into view
+  if(vc)new IntersectionObserver(es=>{if(es[0].isIntersecting)spinOdo()},{threshold:.55}).observe(vc);
+}
 function renderCards(){
   grid.innerHTML='';
   if(!projects.length){grid.innerHTML='<p class="empty">'+(lang==='en'?'New videos coming soon.':'Novos vídeos em breve.')+'</p>';return}
+  if(document.getElementById('viewsNum').dataset.lang!==lang){document.getElementById('viewsNum').dataset.lang=lang;showViews()}
   grid.dataset.count=Math.min(projects.length,3);
   const solo=projects.length===1;
   // show only the filters that have videos; hide the row when there is nothing to filter
@@ -270,7 +325,7 @@ function renderCards(){
 }
 grid.innerHTML='<p class="empty">'+(document.documentElement.lang==='en'?'Loading videos…':'Carregando vídeos…')+'</p>';
 fetch('projects.json?v='+Date.now(),{cache:'no-store'}).then(r=>{if(!r.ok)throw r;return r.json()})
-  .then(d=>{projects=Array.isArray(d.projects)?d.projects:[];renderCards()})
+  .then(d=>{projects=Array.isArray(d.projects)?d.projects:[];if(Number(d.views)>0)VIEWS=Math.round(Number(d.views));document.getElementById('viewsNum').dataset.lang='';renderCards()})
   .catch(()=>{projects=[];renderCards()});
 
 /* scroll progress shown as a timeline playhead under the header */

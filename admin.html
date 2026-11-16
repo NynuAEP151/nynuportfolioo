@@ -72,6 +72,9 @@
       <div class="dr-head">
         <div><span class="dr-eyebrow">Painel do site</span><h1>Seus vídeos</h1><span class="repo-tag" id="repoTag"></span></div>
       </div>
+      <label class="fld views-fld"><span>Total de views (somando todas as plataformas)</span>
+        <input id="fViews" type="text" inputmode="numeric" placeholder="5.000.000" autocomplete="off">
+        <small>Aparece na seção "Contagem de views" do site. Digite só números.</small></label>
       <div class="dr-bar"><span id="drStatus">Tudo publicado</span><button class="btn" id="drPublish" type="button" disabled>Publicar no site</button></div>
       <div id="drListView" style="display:flex;flex-direction:column;gap:14px">
         <div class="dr-list" id="drList"></div>
@@ -117,6 +120,7 @@ const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;'
 const ARTS=['a-burst','a-stripes','a-dots','a-split','a-grid','a-wave'];
 const CATS={youtube:'YouTube',reels:'Reels',comercial:'Comercial',motion:'Motion'};
 const KEY='nynu-admin';
+let views=0;
 let cfg=null,projects=[],sha=null,dirty=false,busy=false,editing=null,formThumb='',formNew=false,formArt='a-burst';
 
 /* ---------- GitHub API ---------- */
@@ -145,11 +149,14 @@ async function start(c){
   cfg=c;
   const repo=await gh('');
   if(!repo.permissions||!repo.permissions.push){const e=new Error('nopush');e.status=403;throw e}
-  try{const f=await gh('/contents/projects.json'+ref());sha=f.sha;const d=JSON.parse(b64ToUtf8(f.content));projects=Array.isArray(d.projects)?d.projects:[]}
+  try{const f=await gh('/contents/projects.json'+ref());sha=f.sha;const d=JSON.parse(b64ToUtf8(f.content));projects=Array.isArray(d.projects)?d.projects:[];views=Math.max(0,Math.round(Number(d.views)||0))}
   catch(e){if(e.status===404){sha=null;projects=[]}else throw e}
   $('login').hidden=true;$('app').hidden=false;$('logout').hidden=false;
   $('repoTag').textContent=cfg.owner+'/'+cfg.repo+' · '+cfg.branch;
   renderList();setDirty(false);
+  const vi=$('fViews');vi.value=views?views.toLocaleString('pt-BR'):'';
+  vi.oninput=()=>{const n=parseInt(vi.value.replace(/\D/g,''),10)||0;if(n!==views){views=n;setDirty(true,'Views alteradas · falta publicar')}};
+  vi.onblur=()=>{vi.value=views?views.toLocaleString('pt-BR'):''};
 }
 $('loginForm').addEventListener('submit',async e=>{
   e.preventDefault();
@@ -265,7 +272,7 @@ pubBtn.addEventListener('click',async()=>{
     }
     status.textContent='Salvando lista de vídeos…';
     const clean=projects.map(p=>{const q={...p};delete q._new;delete q._shown;return q});
-    const body={message:'Atualiza vídeos do portfólio',content:utf8ToB64(JSON.stringify({projects:clean},null,2)+'\n'),branch:cfg.branch};
+    const body={message:'Atualiza vídeos do portfólio',content:utf8ToB64(JSON.stringify({views,projects:clean},null,2)+'\n'),branch:cfg.branch};
     if(sha)body.sha=sha;
     const res=await gh('/contents/projects.json',{method:'PUT',body:JSON.stringify(body)});
     sha=res.content.sha;
