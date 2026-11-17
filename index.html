@@ -96,6 +96,7 @@
           <button class="chip" type="button" data-f="reels" aria-pressed="false">Reels</button>
           <button class="chip" type="button" data-f="comercial" aria-pressed="false" data-en="Commercial">Comercial</button>
           <button class="chip" type="button" data-f="motion" aria-pressed="false">Motion</button>
+          <button class="chip" type="button" data-f="shorts" aria-pressed="false">Shorts</button>
         </div>
       </div>
       <div class="grid feat-grid" id="gridFeat" hidden></div>
@@ -271,7 +272,7 @@ const grid=document.getElementById('grid');
 let lang='pt';
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const L=(p,f)=>{const v=p[f]||{};return (lang==='en'&&v.en)?v.en:(v.pt||v.en||'')};
-const CATS={youtube:{pt:'YouTube',en:'YouTube'},reels:{pt:'Reels',en:'Reels'},comercial:{pt:'Comercial',en:'Commercial'},motion:{pt:'Motion',en:'Motion'}};
+const CATS={youtube:{pt:'YouTube',en:'YouTube'},reels:{pt:'Reels',en:'Reels'},comercial:{pt:'Comercial',en:'Commercial'},motion:{pt:'Motion',en:'Motion'},shorts:{pt:'Shorts',en:'Shorts'}};
 const catLabel=c=>(CATS[c]||{pt:c,en:c})[lang];
 const facts=p=>[]; // details chips removed
 

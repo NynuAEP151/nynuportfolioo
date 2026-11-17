@@ -428,17 +428,13 @@ footer .wrap{display:block;padding-block:26px 34px}
 @media (max-width:980px){.grid.is-others[data-count]{grid-template-columns:repeat(2,1fr)}.grid.feat-grid{grid-template-columns:1fr}}
 @media (max-width:560px){.grid.is-others[data-count]{grid-template-columns:1fr}.others-head{margin-top:40px}}
 
-/* "Outros projetos" as framed thumbnails with the title on the page (no card box) */
-.is-others{row-gap:38px}
-.is-others .card.tile{background:none;border:0;box-shadow:none;overflow:visible;border-radius:0}
-.is-others .card.tile:hover,.is-others .card.tile:nth-child(even):hover{transform:none;box-shadow:none}
-.tile .thumb{border:6px solid var(--cream);border-radius:14px;box-shadow:0 0 0 3px var(--ink),6px 7px 0 3px var(--ink);transform:rotate(-1.4deg);transition:transform .45s var(--pop),box-shadow .35s var(--smooth)}
-.is-others .tile:nth-child(3n+2) .thumb{transform:rotate(1.1deg)}
-.is-others .tile:nth-child(3n) .thumb{transform:rotate(-.6deg)}
-.is-others .tile:hover .thumb{transform:rotate(0) translateY(-4px) scale(1.02);box-shadow:0 0 0 3px var(--ink),9px 11px 0 3px var(--ink)}
+/* "Outros projetos": one box with the thumbnail on top and the info below */
+.is-others{row-gap:30px}
+.is-others .card.tile{background:var(--cream);border:4px solid var(--ink);border-radius:18px;box-shadow:7px 7px 0 var(--ink);overflow:hidden}
+.tile .thumb{border-bottom:4px solid var(--ink)}
 .tile .thumb .lb,.tile .thumb .cat{display:none}
-.tile .thumb .dur{bottom:8px;right:8px}
-.is-others .tile .meta{background:none;padding:16px 4px 0;gap:8px}
+.tile .thumb .dur{bottom:10px;right:10px}
+.is-others .tile .meta{flex:1;padding:16px 18px 18px;gap:10px}
 .is-others .tile .meta h3{font-family:var(--font-body);font-weight:800;font-size:clamp(17px,1.5vw,19px);line-height:1.25;letter-spacing:0}
 .tile-tags{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .ctag{font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border:2px solid var(--ink);border-radius:5px;padding:2px 7px;color:var(--ink);background:var(--cream)}
@@ -446,6 +442,7 @@ footer .wrap{display:block;padding-block:26px 34px}
 .ctag-reels{background:var(--mint)}
 .ctag-comercial{background:var(--khaki)}
 .ctag-motion{background:var(--sky);color:#fff}
+.ctag-shorts{background:#FF2D78;color:#fff}
 .client{font-size:14.5px;font-weight:600;color:#3d3420}
 .featured .tile-tags{margin-top:2px}
 

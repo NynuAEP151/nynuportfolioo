@@ -112,7 +112,7 @@
           <label class="fld"><span>Descrição (inglês)</span><textarea id="fDescEn" rows="3" maxlength="400"></textarea></label>
         </div>
         <div class="row2">
-          <label class="fld"><span>Categoria</span><select id="fCat"><option value="youtube">YouTube</option><option value="reels">Reels</option><option value="comercial">Comercial</option><option value="motion">Motion</option></select></label>
+          <label class="fld"><span>Categoria</span><select id="fCat"><option value="youtube">YouTube</option><option value="reels">Reels</option><option value="comercial">Comercial</option><option value="motion">Motion</option><option value="shorts">Shorts</option></select></label>
           <label class="fld"><span>Duração</span><input id="fDur" placeholder="mm:ss" maxlength="8" inputmode="numeric"></label>
         </div>
         <label class="fld"><span>Canal ou cliente <em>(opcional)</em></span><input id="fClient" maxlength="40" placeholder="Ex.: Canal Filler"><small>Aparece ao lado da categoria, embaixo do título.</small></label>
@@ -130,7 +130,7 @@
 const $=id=>document.getElementById(id);
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const ARTS=['a-burst','a-stripes','a-dots','a-split','a-grid','a-wave'];
-const CATS={youtube:'YouTube',reels:'Reels',comercial:'Comercial',motion:'Motion'};
+const CATS={youtube:'YouTube',reels:'Reels',comercial:'Comercial',motion:'Motion',shorts:'Shorts'};
 const KEY='nynu-admin';
 let views=0;
 let cfg=null,projects=[],sha=null,dirty=false,busy=false,editing=null,formThumb='',formNew=false,formArt='a-burst';
