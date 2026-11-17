@@ -2,6 +2,63 @@
   "views": 5000000,
   "projects": [
     {
+      "id": "vmwkz88r9",
+      "title": {
+        "pt": "\"enfrentei o verity na sequencia do minecraft\"",
+        "en": "\"I faced Verity in the Minecraft sequel\""
+      },
+      "desc": {
+        "pt": "",
+        "en": ""
+      },
+      "featured": false,
+      "cat": "youtube",
+      "dur": "12:05",
+      "url": "https://youtu.be/xTTzMHES6aA",
+      "thumb": "",
+      "word": "",
+      "art": "a-dots",
+      "facts": []
+    },
+    {
+      "id": "vmwkz5mxw",
+      "title": {
+        "pt": "Esconde Esconde com Meccha Charmeleon no Minecraft!",
+        "en": "Hide and Seek with Meccha Charmeleon in Minecraft!"
+      },
+      "desc": {
+        "pt": "",
+        "en": ""
+      },
+      "featured": false,
+      "cat": "youtube",
+      "dur": "13:46",
+      "url": "https://youtu.be/WhZvCgVS8D4",
+      "thumb": "",
+      "word": "",
+      "art": "a-dots",
+      "facts": []
+    },
+    {
+      "id": "vmwkz44ez",
+      "title": {
+        "pt": "Como Participei da COPA DO MUNDO no Minecraft",
+        "en": "How I took part in the Minecraft WORLD CUP"
+      },
+      "desc": {
+        "pt": "",
+        "en": ""
+      },
+      "featured": false,
+      "cat": "youtube",
+      "dur": "13:45",
+      "url": "https://youtu.be/Ck0gMcZywWM",
+      "thumb": "",
+      "word": "",
+      "art": "a-burst",
+      "facts": []
+    },
+    {
       "id": "vmwkywpo0",
       "title": {
         "pt": "Quem ACERTAR o MOB vence no Minecraft! Esse ou Aquele",
