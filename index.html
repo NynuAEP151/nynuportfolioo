@@ -4,9 +4,26 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>NYNU | Editor de vídeo</title>
-<meta name="description" content="NYNU, editor de vídeo: YouTube, Reels, motion graphics, cor e som.">
+<meta name="description" content="Editor de vídeo e motion. Montagem, motion graphics, cor e som para YouTube, Reels e marcas. +5 milhões de views com clientes.">
+<meta name="theme-color" content="#F5B000">
+<link rel="canonical" href="https://nynuaep.com.br/">
+<!-- link previews (Discord, WhatsApp, X, Instagram, LinkedIn...) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NYNU">
+<meta property="og:url" content="https://nynuaep.com.br/">
 <meta property="og:title" content="NYNU | Editor de vídeo">
-<meta property="og:image" content="assets/logo.webp">
+<meta property="og:description" content="Ideias que ganham movimento. Montagem, motion graphics, cor e som para YouTube, Reels e marcas. +5 milhões de views com clientes.">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:image" content="https://nynuaep.com.br/assets/og-image.jpg">
+<meta property="og:image:secure_url" content="https://nynuaep.com.br/assets/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Logo da NYNU numa moldura amarela, estilo cartoon">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="NYNU | Editor de vídeo">
+<meta name="twitter:description" content="Ideias que ganham movimento. +5 milhões de views com clientes.">
+<meta name="twitter:image" content="https://nynuaep.com.br/assets/og-image.jpg">
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -72,14 +89,18 @@
   <section class="block" id="trabalhos">
     <div class="wrap">
       <div class="sec-head reveal">
-        <h2 data-en="Recent &lt;em&gt;work&lt;/em&gt;">Trabalhos <em>recentes</em></h2>
-        <div class="chips" role="group" aria-label="Filtrar trabalhos">
+        <h2 id="workTitle" data-en="Recent &lt;em&gt;work&lt;/em&gt;">Trabalhos <em>recentes</em></h2>
+        <div class="chips" id="chips" role="group" aria-label="Filtrar trabalhos">
           <button class="chip" type="button" data-f="all" aria-pressed="true" data-en="All">Todos</button>
           <button class="chip" type="button" data-f="youtube" aria-pressed="false">YouTube</button>
           <button class="chip" type="button" data-f="reels" aria-pressed="false">Reels</button>
           <button class="chip" type="button" data-f="comercial" aria-pressed="false" data-en="Commercial">Comercial</button>
           <button class="chip" type="button" data-f="motion" aria-pressed="false">Motion</button>
         </div>
+      </div>
+      <div class="grid feat-grid" id="gridFeat" hidden></div>
+      <div class="others-head" id="othersHead" hidden>
+        <span class="others-label" data-en="Other projects">Outros projetos</span>
       </div>
       <div class="grid" id="grid"></div>
     </div>
@@ -302,30 +323,49 @@ if('IntersectionObserver' in window){
   // spin each time the card comes into view
   if(vc)new IntersectionObserver(es=>{if(es[0].isIntersecting)spinOdo()},{threshold:.55}).observe(vc);
 }
+function cardEl(p,i,opts){
+  const b=document.createElement('button');
+  b.type='button';b.className='card reveal'+(opts.big?' featured':'');b.dataset.cat=p.cat;b.dataset.i=i;
+  const d=L(p,'desc');const short=d.split('. ')[0];
+  b.innerHTML='<div class="thumb">'+thumbHTML(p)+'</div><div class="meta"><h3>'+esc(L(p,'title'))+'</h3>'+(d?'<p>'+esc(short.endsWith('.')?short:short+'.')+'</p>':'')+'</div>';
+  if(opts.big){
+    if(opts.badge)b.querySelector('.thumb').insertAdjacentHTML('beforeend','<span class="feat-badge">'+(lang==='en'?'★ Featured':'★ Em destaque')+'</span>');
+    b.querySelector('.meta').insertAdjacentHTML('beforeend','<span class="watch">'+(ytId(p.url)?(lang==='en'?'▶ Watch now':'▶ Assistir agora'):(lang==='en'?'▶ See project':'▶ Ver projeto'))+'</span>');
+  }
+  b.addEventListener('click',()=>openModal(i,b));
+  return b;
+}
+// swaps the section title in both languages (the language toggle reads data-pt / data-en)
+function setWorkTitle(feat){
+  const t=document.getElementById('workTitle');
+  const pt=feat?'Trabalhos em <em>destaque</em>':'Trabalhos <em>recentes</em>',en=feat?'Featured <em>work</em>':'Recent <em>work</em>';
+  t.dataset.pt=pt;t.dataset.en=en;t.innerHTML=lang==='en'?en:pt;
+}
 function renderCards(){
-  grid.innerHTML='';
-  if(!projects.length){grid.innerHTML='<p class="empty">'+(lang==='en'?'New videos coming soon.':'Novos vídeos em breve.')+'</p>';return}
+  const gf=document.getElementById('gridFeat'),oh=document.getElementById('othersHead'),chips=document.getElementById('chips');
+  grid.innerHTML='';gf.innerHTML='';
   if(document.getElementById('viewsNum').dataset.lang!==lang){document.getElementById('viewsNum').dataset.lang=lang;showViews()}
-  grid.dataset.count=Math.min(projects.length,3);
-  const solo=projects.length===1;
-  // show only the filters that have videos; hide the row when there is nothing to filter
-  const used=new Set(projects.map(p=>p.cat));
-  document.querySelectorAll('.chip').forEach(c=>{if(c.dataset.f!=='all')c.hidden=!used.has(c.dataset.f)});
-  const chipRow=document.querySelector('.chips');if(chipRow)chipRow.hidden=used.size<2;
-  projects.forEach((p,i)=>{
-    const b=document.createElement('button');
-    b.type='button';b.className='card reveal'+(solo?' featured':'');b.dataset.cat=p.cat;b.dataset.i=i;
-    const d=L(p,'desc');const short=d.split('. ')[0];
-    b.innerHTML='<div class="thumb">'+thumbHTML(p)+'</div><div class="meta"><h3>'+esc(L(p,'title'))+'</h3>'+(d?'<p>'+esc(short.endsWith('.')?short:short+'.')+'</p>':'')+(facts(p).length?'<div class="facts">'+facts(p).map(f=>'<span>'+esc(f)+'</span>').join('')+'</div>':'')+'</div>';
-    if(solo){
-      b.querySelector('.thumb').insertAdjacentHTML('beforeend','<span class="feat-badge">'+(lang==='en'?'★ Featured':'★ Em destaque')+'</span>');
-      b.querySelector('.meta').insertAdjacentHTML('beforeend','<span class="watch">'+(ytId(p.url)?(lang==='en'?'▶ Watch now':'▶ Assistir agora'):(lang==='en'?'▶ See project':'▶ Ver projeto'))+'</span>');
-    }
-    b.addEventListener('click',()=>openModal(i,b));
-    grid.appendChild(b);
-  });
-  const active=document.querySelector('.chip[aria-pressed="true"]');
-  const f=active?active.dataset.f:'all';
+  if(!projects.length){setWorkTitle(false);gf.hidden=true;oh.hidden=true;grid.innerHTML='<p class="empty">'+(lang==='en'?'New videos coming soon.':'Novos vídeos em breve.')+'</p>';return}
+  const all=projects.map((p,i)=>({p,i}));
+  let feat=all.filter(x=>x.p.featured),rest=all.filter(x=>!x.p.featured);
+  // nothing marked as featured and only one video: show that one big anyway
+  const soloAuto=!feat.length&&projects.length===1;
+  setWorkTitle(feat.length>0);
+  gf.hidden=!feat.length;gf.dataset.count=Math.min(feat.length,2);
+  feat.forEach(x=>gf.appendChild(cardEl(x.p,x.i,{big:true,badge:false})));
+  // the filters only act on the smaller grid; with featured videos they sit beside "Outros projetos"
+  const used=new Set(rest.map(x=>x.p.cat));
+  document.querySelectorAll('#chips .chip').forEach(c=>{if(c.dataset.f!=='all')c.hidden=!used.has(c.dataset.f)});
+  chips.hidden=used.size<2;
+  if(feat.length){if(chips.parentNode!==oh)oh.appendChild(chips)}
+  else{const sh=document.querySelector('#trabalhos .sec-head');if(chips.parentNode!==sh)sh.appendChild(chips)}
+  oh.hidden=!(feat.length&&rest.length);
+  grid.classList.toggle('is-others',feat.length>0);
+  grid.dataset.count=Math.min(rest.length,feat.length?4:3);
+  rest.forEach(x=>grid.appendChild(cardEl(x.p,x.i,{big:soloAuto,badge:soloAuto})));
+  const active=document.querySelector('#chips .chip[aria-pressed="true"]');
+  const f=active&&!active.hidden?active.dataset.f:'all';
+  if(!active||active.hidden)document.querySelectorAll('#chips .chip').forEach(c=>c.setAttribute('aria-pressed',String(c.dataset.f==='all')));
   [...grid.children].forEach(c=>{if(c.dataset.cat)c.hidden=!(f==='all'||c.dataset.cat===f)});
 }
 grid.innerHTML='<p class="empty">'+(document.documentElement.lang==='en'?'Loading videos…':'Carregando vídeos…')+'</p>';

@@ -23,6 +23,16 @@
 .steps code{font-family:var(--font-mono);font-size:13px;background:rgba(0,0,0,.07);padding:1px 5px;border-radius:5px}
 .repo-tag{font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--cocoa)}
 .busy{opacity:.6;pointer-events:none}
+.chk{display:flex;gap:12px;align-items:flex-start;background:#fff;border:3px solid var(--ink);border-radius:12px;padding:12px 14px;cursor:pointer;position:relative}
+.chk input{position:absolute;opacity:0;width:1px;height:1px}
+.chk-box{flex:none;width:30px;height:30px;border:3px solid var(--ink);border-radius:8px;display:grid;place-items:center;font-size:16px;color:transparent;background:var(--cream);transition:background .2s,color .2s,transform .3s var(--pop)}
+.chk input:checked+.chk-box{background:var(--mustard);color:var(--ink);transform:rotate(-8deg)}
+.chk input:focus-visible+.chk-box{outline:3px dashed var(--ink);outline-offset:3px}
+.chk b{display:block;font-size:15px}
+.chk small{display:block;font-size:12.5px;color:#5c5240;margin-top:2px}
+.ib.star{color:#b9ad92}
+.ib.star.on{background:var(--mustard);color:var(--ink)}
+.feat-tag{font-family:var(--font-mono);font-size:10.5px;background:var(--mustard);border:1.5px solid var(--ink);border-radius:5px;padding:1px 5px;vertical-align:2px}
 </style>
 </head>
 <body>
@@ -92,6 +102,7 @@
         </div>
         <div class="fld"><span>Fundo ilustrado (quando não há imagem)</span><div class="swatches" id="fArt" role="radiogroup"></div></div>
         <label class="fld"><span>Texto grande na capa <em>(opcional)</em></span><input id="fWord" maxlength="12" placeholder="Ex.: GG!, 24H, NOVO"></label>
+        <label class="chk"><input type="checkbox" id="fFeat"><span class="chk-box" aria-hidden="true">★</span><span><b>Trabalho em destaque</b><small>Aparece grande no topo, em "Trabalhos em destaque". Os outros vídeos ficam embaixo, em "Outros projetos".</small></span></label>
         <div class="row2">
           <label class="fld"><span>Título (português) *</span><input id="fTitlePt" maxlength="80"></label>
           <label class="fld"><span>Título (inglês)</span><input id="fTitleEn" maxlength="80"></label>
@@ -194,11 +205,12 @@ function renderList(){
     const row=document.createElement('div');row.className='dr-item';
     const src=thumbSrc(p),yt=!src&&ytId(p.url);
     const mini=src?'<img class="art" src="'+esc(src)+'" alt="" style="width:100%;height:100%;object-fit:cover">':yt?ytImg(yt):'<div class="art '+esc(p.art||'a-burst')+'"></div>';
-    row.innerHTML='<div class="mini">'+mini+'</div><div style="min-width:0"><b>'+esc((p.title||{}).pt||(p.title||{}).en||'Sem título')+'</b><small>'+esc(CATS[p.cat]||p.cat)+(p.dur?' · '+esc(p.dur):'')+(p.url?' · link ✓':' · sem link')+'</small></div>'+
-      '<div class="dr-acts"><button class="ib" type="button" data-a="up" aria-label="Mover para cima" '+(i===0?'disabled':'')+'>↑</button><button class="ib" type="button" data-a="down" aria-label="Mover para baixo" '+(i===projects.length-1?'disabled':'')+'>↓</button><button class="ib" type="button" data-a="edit" aria-label="Editar">✎</button><button class="ib del" type="button" data-a="del" aria-label="Excluir">🗑</button></div>';
+    row.innerHTML='<div class="mini">'+mini+'</div><div style="min-width:0"><b>'+(p.featured?'<span class="feat-tag">★ Destaque</span> ':'')+esc((p.title||{}).pt||(p.title||{}).en||'Sem título')+'</b><small>'+esc(CATS[p.cat]||p.cat)+(p.dur?' · '+esc(p.dur):'')+(p.url?' · link ✓':' · sem link')+'</small></div>'+
+      '<div class="dr-acts"><button class="ib star'+(p.featured?' on':'')+'" type="button" data-a="feat" aria-pressed="'+(!!p.featured)+'" aria-label="'+(p.featured?'Tirar do destaque':'Colocar em destaque')+'" title="'+(p.featured?'Tirar do destaque':'Colocar em destaque')+'">★</button><button class="ib" type="button" data-a="up" aria-label="Mover para cima" '+(i===0?'disabled':'')+'>↑</button><button class="ib" type="button" data-a="down" aria-label="Mover para baixo" '+(i===projects.length-1?'disabled':'')+'>↓</button><button class="ib" type="button" data-a="edit" aria-label="Editar">✎</button><button class="ib del" type="button" data-a="del" aria-label="Excluir">🗑</button></div>';
     row.querySelector('.dr-acts').addEventListener('click',e=>{
       const b=e.target.closest('button');if(!b||busy)return;const a=b.dataset.a;
       if(a==='up'||a==='down'){const j=a==='up'?i-1:i+1;[projects[i],projects[j]]=[projects[j],projects[i]];changed('Ordem alterada')}
+      if(a==='feat'){p.featured=!p.featured;changed(p.featured?'Vídeo em destaque':'Vídeo saiu do destaque')}
       if(a==='edit')openForm(i);
       if(a==='del'){
         if(!b.classList.contains('confirm')){b.classList.add('confirm');b.textContent='Excluir?';setTimeout(()=>{if(b.isConnected){b.classList.remove('confirm');b.textContent='🗑'}},3500);return}
@@ -225,7 +237,7 @@ function openForm(i){
   $('fTitlePt').value=(p.title||{}).pt||'';$('fTitleEn').value=(p.title||{}).en||'';
   $('fDescPt').value=(p.desc||{}).pt||'';$('fDescEn').value=(p.desc||{}).en||'';
   $('fCat').value=p.cat||'youtube';$('fDur').value=p.dur||'';$('fUrl').value=p.url||'';
-  $('fWord').value=p.word||'';
+  $('fWord').value=p.word||'';$('fFeat').checked=!!p.featured;
   formNew=!!(p._new||p._shown);formThumb=p._new||p._shown||p.thumb||'';formArt=p.art||'a-burst';$('fErr').hidden=true;$('fThumb').value='';
   paintThumb();listView.hidden=true;form.hidden=false;window.scrollTo({top:0,behavior:'smooth'});$('fTitlePt').focus({preventScroll:true});
 }
@@ -252,7 +264,7 @@ form.addEventListener('submit',e=>{
   const dur=$('fDur').value.trim();if(dur&&!/^\d{1,2}(:\d{2}){1,2}$/.test(dur)){showErr('Escreva a duração como mm:ss, por exemplo 03:45.');$('fDur').focus();return}
   const p={id:editing==null?'v'+Date.now().toString(36):projects[editing].id,
     title:{pt:t,en:$('fTitleEn').value.trim()},desc:{pt:$('fDescPt').value.trim(),en:$('fDescEn').value.trim()},
-    cat:$('fCat').value,dur,url,thumb:formNew?'':formThumb,word:$('fWord').value.trim(),art:formArt,
+    featured:$('fFeat').checked,cat:$('fCat').value,dur,url,thumb:formNew?'':formThumb,word:$('fWord').value.trim(),art:formArt,
     facts:[]};
   if(formNew&&formThumb)p._new=formThumb;
   if(editing==null)projects.unshift(p);else projects[editing]=p;
