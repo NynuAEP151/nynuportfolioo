@@ -4,24 +4,21 @@
     {
       "id": "p1",
       "title": {
-        "pt": "aaaaaaaaaaaaaa",
-        "en": "Vlog: 24h in Recife"
+        "pt": "Ejetor da Sorte no Minecraft!",
+        "en": "Luck Ejector in Minecraft!"
       },
       "desc": {
-        "pt": "Vlog de viagem com cortes rápidos, mapa animado entre os locais e trilha sincronizada com os passos.",
-        "en": "Travel vlog with fast cuts, an animated map between spots and music synced to footsteps."
+        "pt": "",
+        "en": ""
       },
+      "featured": true,
       "cat": "youtube",
       "dur": "14:32",
-      "url": "https://youtu.be/NXYuPlI_ViE",
+      "url": "https://youtu.be/kwnBgXHgBmo",
       "thumb": "",
       "word": "",
       "art": "a-wave",
-      "facts": [
-        "16:9",
-        "4K",
-        "Premiere"
-      ]
+      "facts": []
     }
   ]
 }
