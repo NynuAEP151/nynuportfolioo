@@ -73,7 +73,7 @@ nav a:hover::after{transform:scale(1);opacity:1}
 .hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding-block:56px 28px}
 .eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:var(--ink);color:var(--mustard);padding:6px 12px;border-radius:6px;transform:rotate(-1.5deg)}
 .hero h1{font-size:clamp(40px,6.6vw,88px);margin:22px 0 18px}
-.hero h1 .ln{display:block;overflow:hidden;padding-bottom:.06em}
+.hero h1 .ln{display:block;overflow:hidden;padding:.04em .12em .26em 0;margin:-.04em -.12em -.2em 0}
 .hero h1 .ln span{display:inline-block;animation:rise .9s var(--smooth) both}
 .hero h1 .ln:nth-child(2) span{animation-delay:.12s}
 .hero h1 .ln:nth-child(3) span{animation-delay:.24s}
