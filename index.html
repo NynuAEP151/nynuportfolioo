@@ -325,9 +325,11 @@ if('IntersectionObserver' in window){
 }
 function cardEl(p,i,opts){
   const b=document.createElement('button');
-  b.type='button';b.className='card reveal'+(opts.big?' featured':'');b.dataset.cat=p.cat;b.dataset.i=i;
+  b.type='button';b.className='card reveal'+(opts.big?' featured':'')+(opts.tile?' tile':'');b.dataset.cat=p.cat;b.dataset.i=i;
   const d=L(p,'desc');const short=d.split('. ')[0];
-  b.innerHTML='<div class="thumb">'+thumbHTML(p)+'</div><div class="meta"><h3>'+esc(L(p,'title'))+'</h3>'+(d?'<p>'+esc(short.endsWith('.')?short:short+'.')+'</p>':'')+'</div>';
+  // category tag + channel/client, shown under the title
+  const tags='<div class="tile-tags"><span class="ctag ctag-'+esc(p.cat)+'">'+esc(catLabel(p.cat))+'</span>'+(p.client?'<span class="client">'+esc(p.client)+'</span>':'')+'</div>';
+  b.innerHTML='<div class="thumb">'+thumbHTML(p)+'</div><div class="meta"><h3>'+esc(L(p,'title'))+'</h3>'+(opts.tile?tags:(d?'<p>'+esc(short.endsWith('.')?short:short+'.')+'</p>':'')+(p.client?tags:''))+'</div>';
   if(opts.big){
     if(opts.badge)b.querySelector('.thumb').insertAdjacentHTML('beforeend','<span class="feat-badge">'+(lang==='en'?'★ Featured':'★ Em destaque')+'</span>');
     b.querySelector('.meta').insertAdjacentHTML('beforeend','<span class="watch">'+(ytId(p.url)?(lang==='en'?'▶ Watch now':'▶ Assistir agora'):(lang==='en'?'▶ See project':'▶ Ver projeto'))+'</span>');
@@ -361,8 +363,8 @@ function renderCards(){
   else{const sh=document.querySelector('#trabalhos .sec-head');if(chips.parentNode!==sh)sh.appendChild(chips)}
   oh.hidden=!(feat.length&&rest.length);
   grid.classList.toggle('is-others',feat.length>0);
-  grid.dataset.count=Math.min(rest.length,feat.length?4:3);
-  rest.forEach(x=>grid.appendChild(cardEl(x.p,x.i,{big:soloAuto,badge:soloAuto})));
+  grid.dataset.count=Math.min(rest.length,feat.length?4:3);grid.dataset.n=rest.length;
+  rest.forEach(x=>grid.appendChild(cardEl(x.p,x.i,{big:soloAuto,badge:soloAuto,tile:feat.length>0})));
   const active=document.querySelector('#chips .chip[aria-pressed="true"]');
   const f=active&&!active.hidden?active.dataset.f:'all';
   if(!active||active.hidden)document.querySelectorAll('#chips .chip').forEach(c=>c.setAttribute('aria-pressed',String(c.dataset.f==='all')));

@@ -115,6 +115,7 @@
           <label class="fld"><span>Categoria</span><select id="fCat"><option value="youtube">YouTube</option><option value="reels">Reels</option><option value="comercial">Comercial</option><option value="motion">Motion</option></select></label>
           <label class="fld"><span>Duração</span><input id="fDur" placeholder="mm:ss" maxlength="8" inputmode="numeric"></label>
         </div>
+        <label class="fld"><span>Canal ou cliente <em>(opcional)</em></span><input id="fClient" maxlength="40" placeholder="Ex.: Canal Filler"><small>Aparece ao lado da categoria, embaixo do título.</small></label>
         <label class="fld"><span>Link do vídeo</span><input id="fUrl" type="url" placeholder="https://youtube.com/watch?v=…"><small>YouTube, Instagram, Drive, Vimeo… O botão "Assistir completo" abre esse link. Se for do YouTube, a miniatura do vídeo entra sozinha, a menos que você envie outra imagem.</small></label>
         <p class="dr-error" id="fErr" role="alert" hidden></p>
         <div class="dr-form-actions"><button class="btn" type="submit">Salvar vídeo</button><button class="btn alt" type="button" id="drCancel">Cancelar</button></div>
@@ -205,7 +206,7 @@ function renderList(){
     const row=document.createElement('div');row.className='dr-item';
     const src=thumbSrc(p),yt=!src&&ytId(p.url);
     const mini=src?'<img class="art" src="'+esc(src)+'" alt="" style="width:100%;height:100%;object-fit:cover">':yt?ytImg(yt):'<div class="art '+esc(p.art||'a-burst')+'"></div>';
-    row.innerHTML='<div class="mini">'+mini+'</div><div style="min-width:0"><b>'+(p.featured?'<span class="feat-tag">★ Destaque</span> ':'')+esc((p.title||{}).pt||(p.title||{}).en||'Sem título')+'</b><small>'+esc(CATS[p.cat]||p.cat)+(p.dur?' · '+esc(p.dur):'')+(p.url?' · link ✓':' · sem link')+'</small></div>'+
+    row.innerHTML='<div class="mini">'+mini+'</div><div style="min-width:0"><b>'+(p.featured?'<span class="feat-tag">★ Destaque</span> ':'')+esc((p.title||{}).pt||(p.title||{}).en||'Sem título')+'</b><small>'+esc(CATS[p.cat]||p.cat)+(p.client?' · '+esc(p.client):'')+(p.dur?' · '+esc(p.dur):'')+(p.url?' · link ✓':' · sem link')+'</small></div>'+
       '<div class="dr-acts"><button class="ib star'+(p.featured?' on':'')+'" type="button" data-a="feat" aria-pressed="'+(!!p.featured)+'" aria-label="'+(p.featured?'Tirar do destaque':'Colocar em destaque')+'" title="'+(p.featured?'Tirar do destaque':'Colocar em destaque')+'">★</button><button class="ib" type="button" data-a="up" aria-label="Mover para cima" '+(i===0?'disabled':'')+'>↑</button><button class="ib" type="button" data-a="down" aria-label="Mover para baixo" '+(i===projects.length-1?'disabled':'')+'>↓</button><button class="ib" type="button" data-a="edit" aria-label="Editar">✎</button><button class="ib del" type="button" data-a="del" aria-label="Excluir">🗑</button></div>';
     row.querySelector('.dr-acts').addEventListener('click',e=>{
       const b=e.target.closest('button');if(!b||busy)return;const a=b.dataset.a;
@@ -236,7 +237,7 @@ function openForm(i){
   $('drFormTitle').textContent=i==null?'Novo vídeo':'Editar vídeo';
   $('fTitlePt').value=(p.title||{}).pt||'';$('fTitleEn').value=(p.title||{}).en||'';
   $('fDescPt').value=(p.desc||{}).pt||'';$('fDescEn').value=(p.desc||{}).en||'';
-  $('fCat').value=p.cat||'youtube';$('fDur').value=p.dur||'';$('fUrl').value=p.url||'';
+  $('fCat').value=p.cat||'youtube';$('fClient').value=p.client||'';$('fDur').value=p.dur||'';$('fUrl').value=p.url||'';
   $('fWord').value=p.word||'';$('fFeat').checked=!!p.featured;
   formNew=!!(p._new||p._shown);formThumb=p._new||p._shown||p.thumb||'';formArt=p.art||'a-burst';$('fErr').hidden=true;$('fThumb').value='';
   paintThumb();listView.hidden=true;form.hidden=false;window.scrollTo({top:0,behavior:'smooth'});$('fTitlePt').focus({preventScroll:true});
@@ -264,7 +265,7 @@ form.addEventListener('submit',e=>{
   const dur=$('fDur').value.trim();if(dur&&!/^\d{1,2}(:\d{2}){1,2}$/.test(dur)){showErr('Escreva a duração como mm:ss, por exemplo 03:45.');$('fDur').focus();return}
   const p={id:editing==null?'v'+Date.now().toString(36):projects[editing].id,
     title:{pt:t,en:$('fTitleEn').value.trim()},desc:{pt:$('fDescPt').value.trim(),en:$('fDescEn').value.trim()},
-    featured:$('fFeat').checked,cat:$('fCat').value,dur,url,thumb:formNew?'':formThumb,word:$('fWord').value.trim(),art:formArt,
+    featured:$('fFeat').checked,client:$('fClient').value.trim(),cat:$('fCat').value,dur,url,thumb:formNew?'':formThumb,word:$('fWord').value.trim(),art:formArt,
     facts:[]};
   if(formNew&&formThumb)p._new=formThumb;
   if(editing==null)projects.unshift(p);else projects[editing]=p;
