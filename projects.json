@@ -2,6 +2,46 @@
   "views": 5000000,
   "projects": [
     {
+      "id": "vmwl02vf2",
+      "title": {
+        "pt": "Mini Esconde Esconde no Minecraft",
+        "en": "Mini Hide and Seek in Minecraft"
+      },
+      "desc": {
+        "pt": "",
+        "en": ""
+      },
+      "featured": false,
+      "client": "",
+      "cat": "youtube",
+      "dur": "17:48",
+      "url": "https://youtu.be/nne6G__A9Pg",
+      "thumb": "",
+      "word": "",
+      "art": "a-stripes",
+      "facts": []
+    },
+    {
+      "id": "vmwl01k0y",
+      "title": {
+        "pt": "Quem Escrever a MELHOR Resposta Vence!",
+        "en": "Whoever Writes the BEST Answer Wins!"
+      },
+      "desc": {
+        "pt": "",
+        "en": ""
+      },
+      "featured": false,
+      "client": "",
+      "cat": "youtube",
+      "dur": "15:39",
+      "url": "https://youtu.be/6eGIe8qDhBo",
+      "thumb": "",
+      "word": "",
+      "art": "a-burst",
+      "facts": []
+    },
+    {
       "id": "vmwkzbtqi",
       "title": {
         "pt": "\"Cores da Sorte no Minecraft\"",
