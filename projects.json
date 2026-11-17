@@ -2,6 +2,25 @@
   "views": 5000000,
   "projects": [
     {
+      "id": "vmwkzbtqi",
+      "title": {
+        "pt": "\"Cores da Sorte no Minecraft\"",
+        "en": "\"Lucky Colors in Minecraft\""
+      },
+      "desc": {
+        "pt": "",
+        "en": ""
+      },
+      "featured": false,
+      "cat": "youtube",
+      "dur": "12:11",
+      "url": "https://youtu.be/BeVAWUFb4dg",
+      "thumb": "",
+      "word": "",
+      "art": "a-split",
+      "facts": []
+    },
+    {
       "id": "vmwkz88r9",
       "title": {
         "pt": "\"enfrentei o verity na sequencia do minecraft\"",
