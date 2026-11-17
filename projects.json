@@ -2,6 +2,25 @@
   "views": 5000000,
   "projects": [
     {
+      "id": "vmwkywpo0",
+      "title": {
+        "pt": "Quem ACERTAR o MOB vence no Minecraft! Esse ou Aquele",
+        "en": "Whoever HITS the MOB wins in Minecraft! This or That"
+      },
+      "desc": {
+        "pt": "",
+        "en": ""
+      },
+      "featured": true,
+      "cat": "youtube",
+      "dur": "10:03",
+      "url": "https://youtu.be/coK_SPc7m7A",
+      "thumb": "",
+      "word": "",
+      "art": "a-grid",
+      "facts": []
+    },
+    {
       "id": "p1",
       "title": {
         "pt": "Ejetor da Sorte no Minecraft!",
